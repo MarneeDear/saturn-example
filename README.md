@@ -9,7 +9,7 @@ This is for pure F# web applications and should be preferred over the original w
 It can be built on dotnet core and is optimized for that, but in that case you wont be able to use the 
 FSharp.Data SqlCommandProvider and some other F# type providers.
 
-Optional libraries
+## Optional libraries
 
 Instead of Chessie for error handling I recommend the builtin Result type or FsToolkit.ErrorHandling which provides more utilites
 
@@ -17,15 +17,15 @@ https://demystifyfp.gitbook.io/fstoolkit-errorhandling/
 
 FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 
-Test Framework
+## Test Framework
 
-Required
+### Required
 
-xUnit
+* xUnit
 
-FsUnit
+* FsUnit
 
-Optional Recommendations
+## Optional Recommendations
 
-TickSpec for BDD
+* TickSpec for BDD
 https://github.com/fsprojects/TickSpec

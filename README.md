@@ -10,6 +10,7 @@ It can be built on dotnet core and is optimized for that, but in that case you w
 FSharp.Data SqlCommandProvider and some other F# type providers.
 
 Optional libraries
+
 Instead of Chessie for error handling I recommend the builtin Result type or FsToolkit.ErrorHandling which provides more utilites
 
 https://demystifyfp.gitbook.io/fstoolkit-errorhandling/

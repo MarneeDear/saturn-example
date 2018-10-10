@@ -18,10 +18,14 @@ https://demystifyfp.gitbook.io/fstoolkit-errorhandling/
 FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 
 Test Framework
+
 Required
+
 xUnit
+
 FsUnit
 
-Optional
+Optional Recommendations
+
 TickSpec for BDD
 https://github.com/fsprojects/TickSpec

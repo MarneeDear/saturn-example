@@ -4,4 +4,6 @@ Saturn
 Dapper
 Microsoft.Data.Sqlite
 
+FsToolkit.ErrorHandling
+
 dotnet-saturn

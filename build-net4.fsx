@@ -15,26 +15,27 @@ let webprojdir = currentDirectory + @"/src/Template.Saturn.WebHost"
 let infrastructuredir = currentDirectory + @"/src/Template.Saturn.Infrastructure"
 let testdir = currentDirectory + @"/src"
 let nlogfile = webprojdir + @"/NLog.config"
-// let fileVersion = (sprintf "%s.%s" version Common.buildNumber)
 
-// Target "RestorePackages" (fun _ ->
-//     Common.restorePackages solutionFile
-// )
+let fileVersion = (sprintf "%s.%s" version Common.buildNumber)
+
+Target "RestorePackages" (fun _ ->
+    Common.restorePackages solutionFile
+)
 
 let updateSecrets () =
     match buildServer with 
-    | TeamCity ->
+    | TeamCity -> ()
         //Youll need this in the test app configs in order to build against a database if using one              
-        updateConnectionString "SqlProvider" (environVar "SqlProvider.ConnectionString") (infrastructuredir @@ "app.config")  
-        //Youll need this in the test app configs in order to build against a database if using one              
-        updateConnectionString "SqlProvider" (environVar "SqlProvider.ConnectionString") (testdir @@ "/Template.Infrastructure.Tests/app.config")                
-        updateAppSetting "Eds.Username" (environVar "Eds.Username") (webprojdir @@ "web.config")
-        updateAppSetting "Eds.Password" (environVar "Eds.Password") (webprojdir @@ "web.config")
-        updateConnectionString "DefaultConnection" (environVar "Database.ConnectionString") (webprojdir @@ "web.config")        
-        //Used for Hangfire
-        //updateConnectionString "Hangfire" (environVar "Hangfire.ConnectionString") (webprojdir @@ "web.config")
-        //Where logs are stored on the destination server if using the filesystem
-        updateConfigSetting nlogfile "/*[local-name() = 'nlog']/*[local-name() = 'variable']" "value" (environVar "NLog.LogDirectory")
+        // updateConnectionString "SqlProvider" (environVar "SqlProvider.ConnectionString") (infrastructuredir @@ "app.config")  
+        // //Youll need this in the test app configs in order to build against a database if using one              
+        // updateConnectionString "SqlProvider" (environVar "SqlProvider.ConnectionString") (testdir @@ "/Template.Infrastructure.Tests/app.config")                
+        // updateAppSetting "Eds.Username" (environVar "Eds.Username") (webprojdir @@ "web.config")
+        // updateAppSetting "Eds.Password" (environVar "Eds.Password") (webprojdir @@ "web.config")
+        // updateConnectionString "DefaultConnection" (environVar "Database.ConnectionString") (webprojdir @@ "web.config")        
+        // //Used for Hangfire
+        // //updateConnectionString "Hangfire" (environVar "Hangfire.ConnectionString") (webprojdir @@ "web.config")
+        // //Where logs are stored on the destination server if using the filesystem
+        // updateConfigSetting nlogfile "/*[local-name() = 'nlog']/*[local-name() = 'variable']" "value" (environVar "NLog.LogDirectory")
     | _ -> () // don't do anything if running locally
 
 Target "UpdateConfiguration" (fun _ ->
@@ -86,14 +87,6 @@ Target "ExtractProductionArtifacts" (fun _ ->
 
     TeamCityHelper.PublishArtifact Common.artifactsDir
 )
-
-Target "XUnitTest" (fun _ ->
-    !! (@"C:\development\comit\templates\saturnapp\src\Template.Saturn.Infrastructure.Tests\bin\Debug" @@ "*.Tests.dll")
-    |> xUnit2 (fun p ->
-        {p with 
-            ToolPath = @"C:\development\comit\templates\saturnapp\packages\build\xunit.runner.console\tools\net461\xunit.console.exe"}) //@"../packages/build/xunit.runner.console/tools/net461"})
-)
-
 // Required to ensure targets from Common module are loaded
 Common.init
 

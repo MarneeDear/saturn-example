@@ -1,5 +1,6 @@
 // Include Fake lib
 #r @"packages/build/FAKE/tools/FakeLib.dll"
+open Fake.Testing
 #r @"packages/build/COM.Build/lib/net461/Com.Build.dll"
 
 open Fake
@@ -9,19 +10,16 @@ open Com.Build
 // Properties
 let version = "0.1"
 let productName = "College of Medicine Saturn Template <REPLACE ME>"
-let solutionFile = "WebAppTemplate.sln"
-
-let webprojdir = currentDirectory + @"/src/Template.WebHost"
-let infrastructuredir = currentDirectory + @"/src/Template.Infrastructure"
+let solutionFile = "SaturnAppTemplate.sln"
+let webprojdir = currentDirectory + @"/src/Template.Saturn.WebHost"
+let infrastructuredir = currentDirectory + @"/src/Template.Saturn.Infrastructure"
 let testdir = currentDirectory + @"/src"
 let nlogfile = webprojdir + @"/NLog.config"
+// let fileVersion = (sprintf "%s.%s" version Common.buildNumber)
 
-
-let fileVersion = (sprintf "%s.%s" version Common.buildNumber)
-
-Target "RestorePackages" (fun _ ->
-    Common.restorePackages solutionFile
-)
+// Target "RestorePackages" (fun _ ->
+//     Common.restorePackages solutionFile
+// )
 
 let updateSecrets () =
     match buildServer with 
@@ -52,7 +50,7 @@ Target "BuildTestEnvironmentPackage" (fun _ ->
         [             
             "DeployOnBuild", "True"
             "DeployTarget", "Package"
-            "PublishProfile", "TestEnvironment.pubxml"        
+            "PublishProfile", "TestEnvironment.pubxml" 
          ]       
     Common.rebuildDebugWith overloads solutionFile       
 )
@@ -67,9 +65,7 @@ Target "BuildProductionEnvironmentPackage" (fun _ ->
             "PublishProfile", "ProductionEnvironment.pubxml"        
          ]
     Common.rebuildReleaseWith overloads solutionFile
-
 )
-
 
 Target "ExtractTestArtifacts" (fun _ ->
     !! (Common.testDir @@ "*.xml")
@@ -91,6 +87,13 @@ Target "ExtractProductionArtifacts" (fun _ ->
     TeamCityHelper.PublishArtifact Common.artifactsDir
 )
 
+Target "XUnitTest" (fun _ ->
+    !! (@"C:\development\comit\templates\saturnapp\src\Template.Saturn.Infrastructure.Tests\bin\Debug" @@ "*.Tests.dll")
+    |> xUnit2 (fun p ->
+        {p with 
+            ToolPath = @"C:\development\comit\templates\saturnapp\packages\build\xunit.runner.console\tools\net461\xunit.console.exe"}) //@"../packages/build/xunit.runner.console/tools/net461"})
+)
+
 // Required to ensure targets from Common module are loaded
 Common.init
 
@@ -98,11 +101,11 @@ Target "Common" DoNothing
 Target "All" DoNothing
 Target "TestEnvironment" DoNothing
 Target "ProductionEnvironment" DoNothing
-
+Target "Derp" DoNothing
 
 // Dependencies
 "Clean"
-  ==> "RestorePackages"
+//   ==> "RestorePackages"
   ==> "UpdateConfiguration"
 //  ==> "BuildTests"
 //  ==> "Test"
@@ -112,7 +115,10 @@ Target "ProductionEnvironment" DoNothing
 
 "ProductionEnvironment" <== ["Common"; "BuildProductionEnvironmentPackage"; "ExtractProductionArtifacts"]
 
-"All" <== ["TestEnvironment"; "ProductionEnvironment"]
+// "All" <== ["TestEnvironment"; "ProductionEnvironment"]
+"All" <== ["TestEnvironment"]
+
+"Derp" <== ["BuildTests"; "Test"]
 
     
 // Start build

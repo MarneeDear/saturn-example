@@ -13,6 +13,6 @@ clitool dotnet-saturn
 group Build
   source https://api.nuget.org/v3/index.json
 
-  nuget FAKE == 4.45.1
+  nuget FAKE
   nuget NuGet.CommandLine
   nuget xunit.runner.console

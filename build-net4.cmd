@@ -28,4 +28,4 @@ if errorlevel 1 (
     exit /b %errorlevel%
 )
 
-:: packages\build\FAKE\tools\FAKE.exe build-net4.fsx %*
+packages\build\FAKE\tools\FAKE.exe build-net4.fsx %* --envvar toolPath ./packages/build/xunit.runner.console/tools/net461/

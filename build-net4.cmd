@@ -9,8 +9,14 @@ if errorlevel 1 (
     exit /b %errorlevel%
 )
 
-echo "PAKET RESTORE"
-.paket\paket.exe restore
+IF EXIST "paket.lock" (
+    echo "PAKET RESTORE"
+  .paket\paket.exe restore
+) ELSE (
+    echo "PAKET INSTALL"
+  .paket\paket.exe install
+)
+
 if errorlevel 1 (
     exit /b %errorlevel%
 )

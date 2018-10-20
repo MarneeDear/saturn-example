@@ -4,7 +4,7 @@ open Fake.Testing
 #r @"packages/build/COM.Build/lib/net461/Com.Build.dll"
 
 open Fake
-open Fake.AssemblyInfoFile
+// open Fake.AssemblyInfoFile
 open Com.Build
 
 // Properties

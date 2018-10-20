@@ -3,7 +3,7 @@ FsToolkit.ErrorHandling
 FsUnit.xUnit
 NHamcrest
 xunit
-xunit.abtractions
+xunit.abstractions
 xunit.analyzers
 xunit.assert
 xunit.core

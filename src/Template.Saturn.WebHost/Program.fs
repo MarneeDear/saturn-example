@@ -13,11 +13,12 @@ let app = application {
 
     error_handler (fun ex _ -> pipeline { render_html (InternalError.layout ex) })
     use_router Router.appRouter
-    url "http://localhost:8085/"
+    url "http://saturn-local:8085/"
     memory_cache
     use_static "static"
     use_gzip
     use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
+    use_iis
 }
 
 [<EntryPoint>]

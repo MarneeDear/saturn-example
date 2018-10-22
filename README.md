@@ -29,3 +29,12 @@ FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 
 * TickSpec for BDD
 https://github.com/fsprojects/TickSpec
+
+# How to host on IIS
+By default this template will run as self-hosted using Kestrel, but you can host on IIS too.
+
+1) Add a site to IIS and point it to the WebHost folder
+2) Configure the bindings to whatever port you want to run it on. The template uses 8085.
+3) Configure the Application Pool to use No Managed Code
+4) Configure the web.config file
+	1) Make sure processPath points to where the executable is stored when the project is built. This is template puts it here: .\bin\Debug\net461\Template.Saturn.WebHost.exe

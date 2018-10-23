@@ -30,7 +30,7 @@ FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 * TickSpec for BDD
 https://github.com/fsprojects/TickSpec
 
-# How to host on IIS
+# How to host development on IIS
 By default this template will run as self-hosted using Kestrel, but you can host on IIS too.
 
 1) Add a site to IIS and point it to the WebHost folder
@@ -38,3 +38,6 @@ By default this template will run as self-hosted using Kestrel, but you can host
 3) Configure the Application Pool to use No Managed Code
 4) Configure the web.config file
 	1) Make sure processPath points to where the executable is stored when the project is built. This is template puts it here: .\bin\Debug\net461\Template.Saturn.WebHost.exe
+
+## You can also host on IIS as a published site
+The above steps will get you there but instead of pointing to the WebHost folder, user Visual Studio of `dotnet publish` to create a published site and use that in IIS.

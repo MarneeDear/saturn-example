@@ -10,6 +10,7 @@
     <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Templates\App.fs" />
+    <Compile Include="Templates\Dashboard.fs" />
     <Compile Include="Templates\Login.fs" />
     <Compile Include="Templates\Index.fs" />
     <Compile Include="Templates\NotFound.fs" />
@@ -42,9 +43,6 @@
     <PackageReference Update="FSharp.Core" Version="4.5.2" />
     <PackageReference Update="Giraffe" Version="2.0.0" />
     <PackageReference Update="Saturn" Version="0.7.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Account\" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

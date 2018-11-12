@@ -2,6 +2,10 @@ module App
 
 open Giraffe.GiraffeViewEngine
 open Microsoft.AspNetCore.Http
+open Giraffe.HttpStatusCodeHandlers
+open Giraffe.HttpStatusCodeHandlers
+
+//open Saturn
 
 let layout (content: XmlNode list) (ctx:HttpContext) =
     html [] [ //[_class "has-navbar-fixed-top"] [
@@ -17,23 +21,33 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
         ]
         body [] [
 
-            yield div [_style "background-color:#0c234b"] [
+            yield div [_style "background-color:#0c234b; height:50px; padding-top:10px; padding-bottom:10px;"] [
                 div [_class "container uahslogo"] [
                     img [_src "/uahs-banner2x.png"]
                 ]
             ]
-            yield nav [ _class "navbar has-shadow" ] [
-                div [_class "navbar-brand"] [
-                    //a [_class "navbar-item"; _href "/"] [
-                    //    img [_src "https://avatars0.githubusercontent.com/u/35305523?s=200"; _width "28"; _height "28"]
-                    //]
-                    div [_class "navbar-burger burger"; attr "data-target" "navMenu"] [
-                        span [] []
-                        span [] []
-                        span [] []
+            if ctx.User.Identity.IsAuthenticated = true then
+                yield nav [ _class "navbar has-shadow" ] [
+                    div [_class "navbar-brand"] [
+                        //a [_class "navbar-item"; _href "/"] [
+                        //    img [_src "https://avatars0.githubusercontent.com/u/35305523?s=200"; _width "28"; _height "28"]
+                        //]
+                        div [_class "navbar-burger burger"; attr "data-target" "navMenu"] [
+                            span [] [] //PUT LOGOUT HERE????
+                            span [] []
+                            span [] []
+                        ]
                     ]
                 ]
-            ]
+            else //LOGIN HERE
+                yield nav [ _class "navbar is-pulled-right"; _style "padding:10px 10px 10px 10px;" ] [
+                    div [_class "container"] [
+                        form [_action "/login"; _method "post"] [
+                            input [_type "submit"; _class "button is-red"; _value "Login" ]
+                        ]
+                    ]
+                ]
+                //yield a [_class "is-danger"; _href "/login"] []
             yield div [_class "container logo"] [
                 img [_src "/bannerlogo2x.png"]
             ]

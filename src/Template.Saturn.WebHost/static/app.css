@@ -31,12 +31,12 @@ h2 {
             color: #ab0520;
         }
 
-.button {
+/*.button {
     width: 150px;
     float: left;
     height: 200px;
     margin-right: 10px;
-    padding-top: 10px;
+    padding-top: 10px;*/
 }
 
 .botcontainer .button {
@@ -85,4 +85,14 @@ h2 {
 .blocka img {
     width: 357px;
     height: 179px;
+}
+
+.is-red {
+    background-color: #ab1e24;
+    color: white;
+}
+
+.hero.is-primary {
+    background-color: #0c234b;
+    color: white;
 }

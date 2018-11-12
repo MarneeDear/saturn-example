@@ -5,6 +5,7 @@ open Giraffe.Core
 open Giraffe.ResponseWriters
 open Books
 open Login
+open Dashboard
 open Giraffe
 open System.Security.Claims
 
@@ -32,7 +33,8 @@ type UserCredentialsResponse = { user_name : string }
 
 let loginRouter = router {
     pipe_through login
-    get "" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
+    get "" (redirectTo false "/dashboard")
+    //get "" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
     //get "" (fun next ctx -> task {
     //    let name = ctx.User.Claims |> Seq.filter (fun claim -> claim.Type = ClaimTypes.Name) |> Seq.head
     //    return! json { user_name = name.Value } next ctx
@@ -47,6 +49,7 @@ let browserRouter = router {
     forward "" defaultView //Use the default view
     forward "/books" Books.Controller.resource 
     forward "/login" loginRouter
+    forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
 }
 
 

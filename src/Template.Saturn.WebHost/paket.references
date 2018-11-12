@@ -6,4 +6,6 @@ Microsoft.Data.Sqlite
 
 FsToolkit.ErrorHandling
 
+AspNetCore.Security.CAS
+
 dotnet-saturn

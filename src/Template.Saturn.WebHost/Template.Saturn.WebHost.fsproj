@@ -3,16 +3,17 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net461</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Authentication\Cas.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
-
     <Compile Include="Templates\App.fs" />
+    <Compile Include="Templates\Login.fs" />
     <Compile Include="Templates\Index.fs" />
     <Compile Include="Templates\NotFound.fs" />
     <Compile Include="Templates\InternalError.fs" />
-
     <Compile Include="Books\BooksModel.fs" />
     <Compile Include="Books\BooksViews.fs" />
     <Compile Include="Books\BooksRepository.fs" />

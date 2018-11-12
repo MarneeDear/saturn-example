@@ -4,7 +4,8 @@ source https://api.nuget.org/v3/index.json
 
 nuget FSharp.Core
 nuget Saturn
-nuget Giraffe == 2.0.1
+nuget Giraffe == 1.1.0
+nuget AspNetCore.Security.CAS
 nuget Simple.Migrations
 nuget Microsoft.Data.Sqlite
 nuget FsToolkit.ErrorHandling

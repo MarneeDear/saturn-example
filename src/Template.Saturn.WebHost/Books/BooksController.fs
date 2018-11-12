@@ -7,6 +7,12 @@ open Saturn
 
 module Controller =
 
+  //let login (ctx : HttpContext) =
+  //  let helpp = 1
+  //  pipeline {
+  //      requires_authentication (Giraffe.Auth.challenge "CAS")
+  //  }
+  //[]
   let indexAction (ctx : HttpContext) =
     task {
       let cnf = Controller.getConfig ctx
@@ -24,7 +30,7 @@ module Controller =
       let! result = Database.getById cnf.connectionString id
       match result with
       | Ok (Some result) ->
-        return Views.show ctx result
+        return (Views.show ctx result)
       | Ok None ->
         return NotFound.layout
       | Error ex ->
@@ -101,5 +107,6 @@ module Controller =
     create createAction
     update updateAction
     delete deleteAction
+    //login loginAction
   }
 

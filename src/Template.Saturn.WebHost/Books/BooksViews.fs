@@ -5,6 +5,9 @@ open Giraffe.GiraffeViewEngine
 open Saturn
 
 module Views =
+  let login (ctx : HttpContext) =
+    "HEELO"
+
   let index (ctx : HttpContext) (objs : Book list) =
     let cnt = [
       div [_class "container "] [
@@ -54,7 +57,7 @@ module Views =
         a [_class "button is-text"; _href (Links.index ctx )] [rawText "Back"]
       ]
     ]
-    App.layout ([section [_class "section"] cnt])
+    App.layout ([section [_class "section"] cnt]) ctx
 
   let private form (ctx: HttpContext) (o: Book option) (validationResult : Map<string, string>) isUpdate =
     let validationMessage =
@@ -99,7 +102,7 @@ module Views =
         ]
       ]
     ]
-    App.layout ([section [_class "section"] cnt])
+    App.layout ([section [_class "section"] cnt]) ctx
 
   let add (ctx: HttpContext) (o: Book option) (validationResult : Map<string, string>)=
     form ctx o validationResult false

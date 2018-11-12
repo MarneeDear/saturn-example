@@ -51,7 +51,7 @@ Core.Target.create "Run" (fun _ ->
     }
   let browser = async {
     Threading.Thread.Sleep 5000
-    Diagnostics.Process.Start "http://saturn-local:8085" |> ignore
+    Diagnostics.Process.Start "http://saturn.local:8085" |> ignore
   }
 
   [ server; browser]

@@ -3,7 +3,6 @@ module App
 open Giraffe.GiraffeViewEngine
 open Microsoft.AspNetCore.Http
 open Giraffe.HttpStatusCodeHandlers
-open Giraffe.HttpStatusCodeHandlers
 
 //open Saturn
 
@@ -17,17 +16,17 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
             link [_rel "stylesheet"; _href "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css" ]
             link [_rel "stylesheet"; _href "/app.css" ]
             link [_rel "shortcut icon"; _href "/favicon.ico"]
-
         ]
         body [] [
 
-            yield div [_style "background-color:#0c234b; height:50px; padding-top:10px; padding-bottom:10px;"] [
+            yield div [_style "background-color:#0c234b; height:50px; 
+            padding-top:10px; padding-bottom:10px;"] [
                 div [_class "container uahslogo"] [
                     img [_src "/uahs-banner2x.png"]
                 ]
             ]
             if ctx.User.Identity.IsAuthenticated = true then
-                yield nav [ _class "navbar has-shadow" ] [
+                yield nav [ _class "navbar has-shadow is-pulled-right" ] [
                     div [_class "navbar-brand"] [
                         //a [_class "navbar-item"; _href "/"] [
                         //    img [_src "https://avatars0.githubusercontent.com/u/35305523?s=200"; _width "28"; _height "28"]
@@ -38,13 +37,26 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                             span [] []
                         ]
                     ]
+                    div [_class "navbar-menu"; _id "navMenu"] [
+                        div [_class "navbar-start"] [
+                            a [_class "navbar-item"] [rawText "Dashboard"]
+                            a [_class "navbar-item"] [rawText "Students"]
+                            a [_class "navbar-item"] [rawText "Faculty"]
+                            a [_class "navbar-item"] [rawText "Student Affairs"]
+                            a [_class "navbar-item"] [rawText "Curricular Affairs"]
+                            a [_class "navbar-item"] [rawText "Guide"]
+                        ]
+                        div [_class "navbar-end"] []
+                    ]
                 ]
+
             else //LOGIN HERE
                 yield nav [ _class "navbar is-pulled-right"; _style "padding:10px 10px 10px 10px;" ] [
                     div [_class "container"] [
-                        form [_action "/login"; _method "post"] [
-                            input [_type "submit"; _class "button is-red"; _value "Login" ]
-                        ]
+                        //form [_action "/login"; _method "post"] [
+                        //input [_type "submit"; _class "button is-red"; _value "Login" ]
+                        //]
+                        a [_class "button is-red"; _href "/webauth"] [rawText "Login"]
                     ]
                 ]
                 //yield a [_class "is-danger"; _href "/login"] []
@@ -73,5 +85,7 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                 //]
             ]
             yield div [_style "height:50px;background-color:#0c234b;"] []
+            yield script [_src "/app.js"] []
+
         ]
     ]

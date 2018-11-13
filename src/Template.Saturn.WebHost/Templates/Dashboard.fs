@@ -14,8 +14,8 @@ let dahsboard (ctx:HttpContext) =
         section [_class "hero is-light"] [
             div [_class "hero-body"] [
                 div [_class "container"] [
-                    p [_class "title"] [rawText "The sleeper has awakened."]
-                    p [_class "subtitle"] [rawText name.Value]
+                    p [_class "title"] [rawText (sprintf "Welcome. Your user name is %s." name.Value)]
+                    //p [_class "subtitle"] [rawText name.Value]
                 ]
             ]
         ]       

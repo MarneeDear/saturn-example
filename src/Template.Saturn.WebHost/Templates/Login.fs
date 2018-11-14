@@ -6,10 +6,10 @@ open Microsoft.AspNetCore.Http
 
 let login (ctx:HttpContext) =
     [
-        section [_class "hero is-light"] [
+        section [_class "hero"] [
             div [_class "hero-body"] [
                 div [_class "container"] [
-                    p [_class "title"] [rawText "You might put a login page here. Maybe."]
+                    p [_class "title"] [rawText "You need to be logged in to view this page. Click the button over there."]
                 ]
             ]
         ]       

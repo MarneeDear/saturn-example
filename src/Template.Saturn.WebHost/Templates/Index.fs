@@ -9,7 +9,7 @@ let index =
                 div [_class "container"] [
                     div [_class "columns is-vcentered"] [
                         div [_class "column"] [
-                            p [_class "title"] [rawText "Welcome to Saturn!"]
+                            p [_class "title"] [rawText "Welcome to the MedTemplate using Saturn Framework!"]
                             p [_class "subtitle"] [rawText "Opinionated, web development framework for F# which implements the server-side, functional MVC pattern"]
                         ]
                     ]

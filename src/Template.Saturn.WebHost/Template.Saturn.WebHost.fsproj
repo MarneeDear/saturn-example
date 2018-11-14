@@ -11,6 +11,7 @@
     <Compile Include="Config.fs" />
     <Compile Include="Templates\App.fs" />
     <Compile Include="Templates\Dashboard.fs" />
+    <Compile Include="Templates\Logout.fs" />
     <Compile Include="Templates\Login.fs" />
     <Compile Include="Templates\Index.fs" />
     <Compile Include="Templates\NotFound.fs" />

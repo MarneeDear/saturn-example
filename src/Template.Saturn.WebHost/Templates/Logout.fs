@@ -4,9 +4,9 @@ open Giraffe.GiraffeViewEngine
 open Microsoft.AspNetCore.Http
 
 
-let login (ctx:HttpContext) =
+let logout (ctx:HttpContext) =
     [
-        section [_class "hero is-light"] [
+        section [_class "hero is-danger"] [
             div [_class "hero-body"] [
                 div [_class "container"] [
                     p [_class "title"] [rawText "You might put a logout of webauth message here. "]
@@ -16,4 +16,4 @@ let login (ctx:HttpContext) =
     ]
 
 let layout ctx =
-    App.layout (login ctx) ctx
+    App.layout (logout ctx) ctx

@@ -19,17 +19,17 @@ h2 {
     clear: left;
 }
 
-    .botcontainer a {
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 14px;
-        color: #0c234b;
-        text-align: center;
-    }
+.botcontainer a {
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    color: #0c234b;
+    text-align: center;
+}
 
-        .botcontainer a:hover {
-            color: #ab0520;
-        }
+.botcontainer a:hover {
+    color: #ab0520;
+}
 
 /*.button {
     width: 150px;
@@ -44,15 +44,15 @@ h2 {
     border-radius: 20px;
 }
 
-    .botcontainer .button:hover {
-        border: 3px solid #f4f4f4;
-    }
+.botcontainer .button:hover {
+    border: 3px solid #f4f4f4;
+}
 
-    .botcontainer .button img {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 8px;
-    }
+.botcontainer .button img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 8px;
+}
 
 .botcontainer bottext {
     font-weight: bold;
@@ -94,6 +94,11 @@ h2 {
 
 .hero.is-primary {
     background-color: #0c234b;
+    color: white;
+}
+
+.hero.is-danger {
+    background-color: firebrick;
     color: white;
 }
 

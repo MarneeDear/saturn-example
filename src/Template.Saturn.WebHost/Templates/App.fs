@@ -45,7 +45,7 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                             a [_class "navbar-item"] [rawText "Student Affairs"]
                             a [_class "navbar-item"] [rawText "Curricular Affairs"]
                             a [_class "navbar-item"] [rawText "Guide"]
-                            a [_class "navbar-item"] [rawText "Logout"]
+                            a [_class "navbar-item"; _href "/logout"] [rawText "Logout"]
                         ]
                         div [_class "navbar-end"] []
                     ]
@@ -65,7 +65,9 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                 img [_src "/bannerlogo2x.png"]
             ]
 
-            yield! content
+            yield div [_class "container"; _style "min-height:61vh"] [
+                yield! content
+            ]
             //yield footer [_class "footer is-fixed-bottom"] [
             //    div [_class "container"] [
             //        div [_class "content has-text-centered"] [
@@ -78,14 +80,15 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
             //        ]
             //    ]
             //]
-            yield //footer [_class "footer"] [
-                div [_style "background-color:#f7f7f7; height:179px"] [
-                    div [_class "blocka has-text-centered"] [
-                        img [_src "/blockangleblue2x.png"; _class "is-fixed-bottom"]
+            yield //footer [_class "footer"] [    
+                div [_style "background-color:#f7f7f7;"] [
+                    div [_class "blocka has-text-centered"; _style "height:179px"] [
+                        img [_src "/blockangleblue2x.png"; _class "is-fixed-bottom "]
                     ]
-                //]
-            ]
-            yield div [_style "height:50px;background-color:#0c234b;"] []
+                    div [_style "height:50px;background-color:#0c234b;"] []
+                ]
+            //]
+            //yield 
             yield script [_src "/app.js"] []
 
         ]

@@ -6,12 +6,14 @@ http://kcieslak.io/Reinventing-MVC-for-web-programming-with-F
 
 This is for pure F# web applications and should be preferred over the original web app template.
 
-It can be built on dotnet core and is optimized for that, but in that case you wont be able to use the 
-FSharp.Data SqlCommandProvider and some other F# type providers.
+You can target netstandard, but in that case you wont be able to use the FSharp.Data SqlCommandProvider and some other F# type providers.
+
+Here is a list of the possible target frameworks.
+https://docs.microsoft.com/en-us/dotnet/standard/frameworks
 
 ## Optional libraries
 
-Instead of Chessie for error handling I recommend the builtin Result type or FsToolkit.ErrorHandling which provides more utilites
+Instead of Chessie for error handling I recommend the builtin Result type or FsToolkit.ErrorHandling which provides more utilities
 
 https://demystifyfp.gitbook.io/fstoolkit-errorhandling/
 

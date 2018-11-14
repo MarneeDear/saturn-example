@@ -5,8 +5,6 @@ open Giraffe.GiraffeViewEngine
 open Saturn
 
 module Views =
-  let login (ctx : HttpContext) =
-    "HEELO"
 
   let index (ctx : HttpContext) (objs : Book list) =
     let cnt = [
@@ -40,7 +38,7 @@ module Views =
         a [_class "button is-text"; _href (Links.add ctx )] [rawText "New Book"]
       ]
     ]
-    App.layout ([section [_class "section"] cnt])
+    App.layout ([section [_class "section"] cnt]) ctx
 
 
   let show (ctx : HttpContext) (o : Book) =

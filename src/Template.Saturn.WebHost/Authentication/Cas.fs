@@ -36,6 +36,7 @@ type ApplicationBuilder with
         c.AddCAS(fun (opt : CasOptions) ->
           opt.CasServerUrlBase <- casOptions.CasServerUrlBase
           opt.SignInScheme <- CookieAuthenticationDefaults.AuthenticationScheme
+          //opt.CallbackPath <- new PathString("/dashboard")
           )
         |> ignore
         s

@@ -96,3 +96,11 @@ h2 {
     background-color: #0c234b;
     color: white;
 }
+
+#nav-toggle-state {
+    display: none;
+}
+
+#nav-toggle-state:checked ~ .nav-menu {
+    display: block;
+}

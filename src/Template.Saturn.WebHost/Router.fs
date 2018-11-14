@@ -8,9 +8,11 @@ open Login
 open Dashboard
 open Giraffe
 open System.Security.Claims
+open Microsoft.AspNetCore.Http
 
 let login = pipeline {
-    requires_authentication (Giraffe.Auth.challenge "CAS")
+    requires_authentication (fun next ctx -> htmlView (Login.layout ctx) next ctx)
+    //(Giraffe.Auth.challenge "CAS")
     //plug print_user_details
 }
 
@@ -31,9 +33,13 @@ let defaultView = router {
 type UserCredentialsResponse = { user_name : string }  
 
 
-let loginRouter = router {
+let loggedInView = router {
     pipe_through login
-    get "" (redirectTo false "/dashboard")
+    //get "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
+    forward "/books" Books.Controller.resource 
+    forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
+    //get "" (redirectTo false "/dashboard")
+
     //get "" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
     //get "" (fun next ctx -> task {
     //    let name = ctx.User.Claims |> Seq.filter (fun claim -> claim.Type = ClaimTypes.Name) |> Seq.head
@@ -41,15 +47,25 @@ let loginRouter = router {
     //})
 }
 
+let isAuthenticated (ctx:HttpContext) =
+    if ctx.User.Identity.IsAuthenticated then 
+        (redirectTo false "/dashboard")
+    else
+        (Giraffe.Auth.challenge "CAS")
 
 let browserRouter = router {
     not_found_handler (htmlView NotFound.layout) //Use the default 404 webpage
     pipe_through browser //Use the default browser pipeline
 
     forward "" defaultView //Use the default view
-    forward "/books" Books.Controller.resource 
-    forward "/login" loginRouter
-    forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
+    //forward "/books" Books.Controller.resource 
+    get "/books" loggedInView
+    get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
+    get "/dashboard" loggedInView //(fun next ctx -> htmlView (Login.layout ctx) next ctx)
+    get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx)
+    //(Giraffe.Auth.challenge "CAS")
+    //get "/signin-cas" (redirectTo false "/dashboard")
+
 }
 
 

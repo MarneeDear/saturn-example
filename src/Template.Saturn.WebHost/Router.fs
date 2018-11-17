@@ -12,13 +12,8 @@ open System.Security.Claims
 open Microsoft.AspNetCore.Http
 
 
-//let logout = pipeline {
-//    plug 
-//}
-
 let login = pipeline {
     requires_authentication (fun next ctx -> htmlView (Login.layout ctx) next ctx)
-    //(Giraffe.Auth.challenge "CAS")
     //plug print_user_details
 }
 

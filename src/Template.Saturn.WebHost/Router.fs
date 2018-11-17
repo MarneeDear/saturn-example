@@ -36,6 +36,7 @@ type UserCredentialsResponse = { user_name : string }
 
 let loggedInView = router {
     pipe_through login
+    pipe_through protectFromForgery
     forward "/books" Books.Controller.resource 
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
 }

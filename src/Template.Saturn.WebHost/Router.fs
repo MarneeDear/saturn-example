@@ -57,9 +57,9 @@ let browserRouter = router {
     forward "" defaultView //Use the default view
     get "/books" loggedInView
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
-    get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx))
-    get "/dashboard" loggedInView //(fun next ctx -> htmlView (Login.layout ctx) next ctx)
-    get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) //TODO: ??how to do a combinator here?
+    get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
+    get "/dashboard" loggedInView 
+    get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
 }
 
 

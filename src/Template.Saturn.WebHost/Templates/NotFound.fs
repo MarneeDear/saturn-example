@@ -11,6 +11,6 @@ let layout =
         ]
         body [] [
            h1 [] [rawText "ERROR #404"]
-           a [_href "/" ] [rawText "Go back to home page"]
+           a [_href "/dashboard" ] [rawText "Go back to home page"]
         ]
     ]

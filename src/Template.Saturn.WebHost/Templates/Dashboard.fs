@@ -21,4 +21,4 @@ let dahsboard (ctx:HttpContext) =
     ]
 
 let layout ctx =
-    App.layout (dahsboard ctx) ctx
+    AuthApp.layout (dahsboard ctx) ctx

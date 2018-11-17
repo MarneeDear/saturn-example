@@ -25,42 +25,16 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                     img [_src "/uahs-banner2x.png"]
                 ]
             ]
-            if ctx.User.Identity.IsAuthenticated = true then
-                yield nav [ _class "navbar has-shadow is-pulled-right" ] [
-                    div [_class "navbar-brand"] [
-                        //a [_class "navbar-item"; _href "/"] [
-                        //    img [_src "https://avatars0.githubusercontent.com/u/35305523?s=200"; _width "28"; _height "28"]
-                        //]
-                        div [_class "navbar-burger burger"; attr "data-target" "navMenu"] [
-                            span [] [] //PUT LOGOUT HERE????
-                            span [] []
-                            span [] []
-                        ]
-                    ]
-                    div [_class "navbar-menu"; _id "navMenu"] [
-                        div [_class "navbar-start"] [
-                            a [_class "navbar-item"] [rawText "Dashboard"]
-                            a [_class "navbar-item"] [rawText "Students"]
-                            a [_class "navbar-item"] [rawText "Faculty"]
-                            a [_class "navbar-item"] [rawText "Student Affairs"]
-                            a [_class "navbar-item"] [rawText "Curricular Affairs"]
-                            a [_class "navbar-item"] [rawText "Guide"]
-                            a [_class "navbar-item"; _href "/logout"] [rawText "Logout"]
-                        ]
-                        div [_class "navbar-end"] []
-                    ]
+            //LOGIN HERE
+            yield nav [ _class "navbar is-pulled-right"; _style "padding:10px 10px 10px 10px;" ] [
+                div [_class "container"] [
+                    //form [_action "/login"; _method "post"] [
+                    //input [_type "submit"; _class "button is-red"; _value "Login" ]
+                    //]
+                    a [_class "button is-red"; _href "/webauth"] [rawText "Login"]
                 ]
-
-            else //LOGIN HERE
-                yield nav [ _class "navbar is-pulled-right"; _style "padding:10px 10px 10px 10px;" ] [
-                    div [_class "container"] [
-                        //form [_action "/login"; _method "post"] [
-                        //input [_type "submit"; _class "button is-red"; _value "Login" ]
-                        //]
-                        a [_class "button is-red"; _href "/webauth"] [rawText "Login"]
-                    ]
-                ]
-                //yield a [_class "is-danger"; _href "/login"] []
+            ]
+            //yield a [_class "is-danger"; _href "/login"] []
             yield div [_class "container logo"] [
                 img [_src "/bannerlogo2x.png"]
             ]
@@ -80,7 +54,8 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
             //        ]
             //    ]
             //]
-            yield //footer [_class "footer"] [    
+            yield hr []
+            yield //footer [_class "footer"] [  
                 div [_style "background-color:#f7f7f7;"] [
                     div [_class "blocka has-text-centered"; _style "height:179px"] [
                         img [_src "/blockangleblue2x.png"; _class "is-fixed-bottom "]

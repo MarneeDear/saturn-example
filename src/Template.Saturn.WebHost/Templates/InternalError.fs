@@ -14,6 +14,6 @@ let layout (ex: Exception) =
            h3 [] [rawText ex.Message]
            h4 [] [rawText ex.Source]
            p [] [rawText ex.StackTrace]
-           a [_href "/" ] [rawText "Go back to home page"]
+           a [_href "/dashboard" ] [rawText "Go back to home page"]
         ]
     ]

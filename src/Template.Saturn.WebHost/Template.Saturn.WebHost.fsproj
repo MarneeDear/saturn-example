@@ -9,6 +9,7 @@
     <Compile Include="Authentication\Cas.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
     <Compile Include="Templates\Dashboard.fs" />
     <Compile Include="Templates\Logout.fs" />

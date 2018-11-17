@@ -31,6 +31,7 @@ FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 
 * TickSpec for BDD
 https://github.com/fsprojects/TickSpec
+* Canopy for UI tests https://lefthandedgoat.github.io/canopy/
 
 # How to host development on IIS
 By default this template will run as self-hosted using Kestrel, but you can host on IIS too.

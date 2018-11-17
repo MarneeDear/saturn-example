@@ -6,7 +6,7 @@ http://kcieslak.io/Reinventing-MVC-for-web-programming-with-F
 
 This is for pure F# web applications and should be preferred over the original web app template.
 
-You can target netstandard, but in that case you wont be able to use the FSharp.Data SqlCommandProvider and some other F# type providers.
+You can target netstandard2.0, but in that case you wont be able to use the FSharp.Data SqlCommandProvider and some other F# type providers.
 
 Here is a list of the possible target frameworks.
 https://docs.microsoft.com/en-us/dotnet/standard/frameworks

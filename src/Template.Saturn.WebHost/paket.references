@@ -9,3 +9,6 @@ FsToolkit.ErrorHandling
 AspNetCore.Security.CAS
 
 dotnet-saturn
+
+COM.Core
+COM.Infrastructure

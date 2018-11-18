@@ -4,7 +4,6 @@ open System
 open Giraffe
 open Saturn
 open Config
-//open Microsoft.AspNetCore.Authentication.OAuth
 open Microsoft.AspNetCore.Http
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Authentication.OAuth
@@ -15,6 +14,7 @@ open CAS
 open Microsoft.AspNetCore.Builder
 open System.Security.Claims
 open Microsoft.Extensions.Logging
+open Microsoft.AspNetCore.Authentication.Cookies
 
 
 let endpointPipe = pipeline {
@@ -22,11 +22,10 @@ let endpointPipe = pipeline {
     plug requestId
 }
 
-
 let newCasOptions = new CasOptions()
 newCasOptions.CasServerUrlBase <- "https://webauth.arizona.edu/webauth"
+newCasOptions.SignInScheme <- CookieAuthenticationDefaults.AuthenticationScheme
 
-    
 
 let app = application {
     pipe_through endpointPipe
@@ -39,7 +38,6 @@ let app = application {
     use_gzip
     use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
     use_iis
-    //use_custom_oauth "Web Auth" (fun opts -> setWebAuthOptions opts )
     use_cas_with_options newCasOptions
 }
 

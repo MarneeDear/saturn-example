@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net461</TargetFramework>
@@ -33,9 +33,11 @@
     <Content Include="static\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="paket.references" />
+    <Content Include="paket.references" />
     <None Include="static\app.js" />
-    <None Include="web.config" />
+    <None Include="web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Template.Saturn.Core\Template.Saturn.Core.fsproj" />

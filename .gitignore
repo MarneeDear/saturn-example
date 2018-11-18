@@ -6,3 +6,6 @@ paket-files/
 .vs/
 tmp/
 artifacts/
+*.pubxml
+*.pubxml.user
+src/Template.Saturn.WebHost/Properties

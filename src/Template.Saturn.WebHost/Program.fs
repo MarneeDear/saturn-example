@@ -16,16 +16,10 @@ open System.Security.Claims
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Authentication.Cookies
 
-
 let endpointPipe = pipeline {
     plug head
     plug requestId
 }
-
-let newCasOptions = new CasOptions()
-newCasOptions.CasServerUrlBase <- "https://webauth.arizona.edu/webauth"
-newCasOptions.SignInScheme <- CookieAuthenticationDefaults.AuthenticationScheme
-
 
 let app = application {
     pipe_through endpointPipe
@@ -38,7 +32,7 @@ let app = application {
     use_gzip
     use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
     use_iis
-    use_cas_with_options newCasOptions
+    use_cas_with_options "https://webauth.arizona.edu/webauth"
 }
 
 [<EntryPoint>]

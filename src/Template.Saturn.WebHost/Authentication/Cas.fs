@@ -1,18 +1,10 @@
 ﻿module CAS
 
 open Saturn
-open Giraffe
-open Microsoft.AspNetCore
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Authentication.Cookies
-open Microsoft.AspNetCore.Http
-open System.Threading.Tasks
-open System
 open Microsoft.AspNetCore.Authentication
-open System.Net.Http
-open System.Net.Http.Headers
-open Newtonsoft.Json.Linq
 open AspNetCore.Security.CAS
 
 
@@ -22,7 +14,7 @@ type ApplicationBuilder with
     //Enables CAS authentication
     //Uses https://github.com/IUCrimson/AspNet.Security.CAS
     [<CustomOperation("use_cas_with_options")>]
-    member __.UseCasAuthenitcation(state: ApplicationState, (casOptions : CasOptions)) = 
+    member __.UseCasAuthenitcation(state: ApplicationState, casServerUrlBase) =
       let middleware (app : IApplicationBuilder) =
         app.UseAuthentication()               
 
@@ -32,7 +24,10 @@ type ApplicationBuilder with
           cfg.DefaultChallengeScheme <- "CAS"
           )
         addCookie state c
-        c.AddCAS(fun o -> casOptions |> ignore)
+        c.AddCAS(fun o -> 
+            o.CasServerUrlBase <- casServerUrlBase
+            o.SignInScheme <- CookieAuthenticationDefaults.AuthenticationScheme
+            )
         |> ignore
         s
 

@@ -1,10 +1,6 @@
 framework: auto-detect
 
 source https://api.nuget.org/v3/index.json
-source https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc 
-// Use this to confure the Team City credentials securely on your system
-// $ .paket/paket.exe config add-credentials https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
-
 
 nuget FSharp.Core
 nuget Saturn
@@ -19,9 +15,6 @@ nuget xunit.abstractions
 nuget xunit.runner.visualstudio
 
 clitool dotnet-saturn
-
-nuget COM.Core
-nuget COM.Infrastructure
 
 group Build
   source https://api.nuget.org/v3/index.json

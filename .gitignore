@@ -6,3 +6,5 @@ paket-files/
 .vs/
 tmp/
 artifacts/
+*.pubxml
+*.pubxml.user

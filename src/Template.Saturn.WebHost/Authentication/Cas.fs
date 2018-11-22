@@ -14,7 +14,7 @@ type ApplicationBuilder with
     //Enables CAS authentication
     //Uses https://github.com/IUCrimson/AspNet.Security.CAS
     [<CustomOperation("use_cas_with_options")>]
-    member __.UseCasAuthenitcation(state: ApplicationState, casServerUrlBase) =
+    member __.UseCasAuthentication(state: ApplicationState, casServerUrlBase) =
       let middleware (app : IApplicationBuilder) =
         app.UseAuthentication()               
 

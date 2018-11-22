@@ -20,7 +20,6 @@ let endpointPipe = pipeline {
     plug head
     plug requestId
 }
-
 let app = application {
     pipe_through endpointPipe
     logging (fun (builder: ILoggingBuilder) -> builder.SetMinimumLevel(LogLevel.Trace) |> ignore)

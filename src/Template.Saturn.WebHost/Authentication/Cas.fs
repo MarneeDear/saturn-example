@@ -13,7 +13,7 @@ let private addCookie state (c : AuthenticationBuilder) = if not state.CookiesAl
 type ApplicationBuilder with
     //Enables CAS authentication
     //Uses https://github.com/IUCrimson/AspNet.Security.CAS
-    [<CustomOperation("use_cas_with_options")>]
+    [<CustomOperation("use_cas")>]
     member __.UseCasAuthentication(state: ApplicationState, casServerUrlBase) =
       let middleware (app : IApplicationBuilder) =
         app.UseAuthentication()               
@@ -35,6 +35,4 @@ type ApplicationBuilder with
           ServicesConfig = service::state.ServicesConfig
           AppConfigs = middleware::state.AppConfigs
           CookiesAlreadyAdded = true
-
-
       }

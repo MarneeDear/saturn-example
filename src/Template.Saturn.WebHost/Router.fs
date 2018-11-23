@@ -28,11 +28,9 @@ let defaultView = router {
     get "/" (fun next ctx -> htmlView (Index.layout ctx) next ctx)
     get "/index.html" (redirectTo false "/")
     get "/default.html" (redirectTo false "/")
-
 }
 
 type UserCredentialsResponse = { user_name : string }  
-
 
 let loggedInView = router {
     pipe_through login

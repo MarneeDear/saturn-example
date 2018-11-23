@@ -5,7 +5,7 @@ open Microsoft.AspNetCore.Http
 open System.Security.Claims
 
 
-let dahsboard (ctx:HttpContext) =
+let dashboard (ctx:HttpContext) =
     let name = 
         ctx.User.Claims
         |> Seq.filter (fun claim -> claim.Type = ClaimTypes.Name) 
@@ -21,4 +21,4 @@ let dahsboard (ctx:HttpContext) =
     ]
 
 let layout ctx =
-    AuthApp.layout (dahsboard ctx) ctx
+    AuthApp.layout (dashboard ctx) ctx

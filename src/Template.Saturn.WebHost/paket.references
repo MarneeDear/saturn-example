@@ -1,4 +1,5 @@
 FSharp.Core
+FSharp.Data
 Saturn
 
 Dapper
@@ -12,3 +13,5 @@ dotnet-saturn
 
 COM.Core
 COM.Infrastructure
+
+Chessie

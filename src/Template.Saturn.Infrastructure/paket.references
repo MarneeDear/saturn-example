@@ -1,2 +1,5 @@
 FSharp.Core
 FsToolkit.ErrorHandling
+
+COM.Core
+COM.Infrastructure

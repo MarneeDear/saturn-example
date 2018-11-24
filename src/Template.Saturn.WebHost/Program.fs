@@ -31,7 +31,7 @@ let app = application {
     use_gzip
     use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
     use_iis
-    use_cas"https://webauth.arizona.edu/webauth"
+    use_cas"https://webauth.arizona.edu/webauth" "" "" ""
 }
 
 [<EntryPoint>]

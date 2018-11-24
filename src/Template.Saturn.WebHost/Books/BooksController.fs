@@ -7,12 +7,6 @@ open Saturn
 
 module Controller =
 
-  //let login (ctx : HttpContext) =
-  //  let helpp = 1
-  //  pipeline {
-  //      requires_authentication (Giraffe.Auth.challenge "CAS")
-  //  }
-  //[]
   let indexAction (ctx : HttpContext) =
     task {
       let cnf = Controller.getConfig ctx

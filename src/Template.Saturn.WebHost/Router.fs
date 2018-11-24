@@ -25,7 +25,7 @@ let browser = pipeline {
 }
 
 let defaultView = router {
-    get "/" (fun next ctx -> htmlView (Index.layout ctx) next ctx)
+    get "/" (htmlView Index.layout)
     get "/index.html" (redirectTo false "/")
     get "/default.html" (redirectTo false "/")
 }

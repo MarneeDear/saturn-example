@@ -16,4 +16,4 @@ let login (ctx:HttpContext) =
     ]
 
 let layout ctx =
-    App.layout (login ctx) ctx
+    App.layout (login ctx)

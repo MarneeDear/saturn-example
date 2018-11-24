@@ -16,4 +16,4 @@ let logout (ctx:HttpContext) =
     ]
 
 let layout ctx =
-    App.layout (logout ctx) ctx
+    App.layout (logout ctx)

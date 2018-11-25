@@ -6,7 +6,8 @@ source https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
 // $ .paket/paket.exe config add-credentials https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
 
 
-nuget FSharp.Core
+nuget FSharp.Core == 4.5.0
+nuget FSharp.Data == 3.0
 nuget Saturn
 nuget Giraffe == 1.1.0
 nuget AspNetCore.Security.CAS
@@ -17,11 +18,12 @@ nuget Dapper
 nuget FsUnit.xUnit == 3.2.0
 nuget xunit.abstractions
 nuget xunit.runner.visualstudio
+nuget Chessie
 
 clitool dotnet-saturn
 
-nuget COM.Core
-nuget COM.Infrastructure
+nuget COM.Core == 0.5.33-dev
+nuget COM.Infrastructure == 0.5.34-dev
 
 group Build
   source https://api.nuget.org/v3/index.json

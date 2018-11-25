@@ -2,9 +2,13 @@ RESTRICTION: == net461
 NUGET
   remote: https://api.nuget.org/v3/index.json
     AspNetCore.Security.CAS (2.0.4)
+    Chessie (0.6)
+      FSharp.Core
     Dapper (1.50.5)
     dotnet-saturn (0.7.2) - clitool: true
-    FSharp.Core (4.5.3)
+    FSharp.Core (4.5)
+    FSharp.Data (3.0)
+      FSharp.Core (>= 4.0.0.1)
     FsToolkit.ErrorHandling (0.0.9)
       FSharp.Core (>= 4.5)
     FsUnit.xUnit (3.2)
@@ -82,8 +86,8 @@ NUGET
       xunit.extensibility.core (2.4.1)
     xunit.runner.visualstudio (2.4.1)
   remote: https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
-    COM.Core (0.5.25)
-    COM.Infrastructure (0.5.28)
+    COM.Core (0.5.33-dev)
+    COM.Infrastructure (0.5.34-dev)
       COM.Core (>= 0.5.25)
       Newtonsoft.Json (>= 9.0.1)
       NLog (>= 4.4.1)

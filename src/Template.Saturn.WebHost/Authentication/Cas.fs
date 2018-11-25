@@ -31,8 +31,13 @@ type ApplicationBuilder with
         let identity = new ClaimsIdentity()
         for attr in attributes do 
           for value in attr.Values do
-            identity.AddClaim(new Claim(attr.Name, value))
+            if attr.Name = "isMemberOf" then
+              identity.AddClaim(new Claim(ClaimTypes.Role, value))
+            else
+              identity.AddClaim(new Claim(attr.Name, value))
         identity
+
+      //let getMembership
 
       let cookieEvents = new CookieAuthenticationEvents()
       cookieEvents.OnSigningIn <- (fun ctx -> 

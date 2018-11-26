@@ -4,10 +4,11 @@ open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.ContextInsensitive
 open Config
 open Saturn
+open Authorization
 
 module Controller =
-
   let indexAction (ctx : HttpContext) =
+     
     task {
       let cnf = Controller.getConfig ctx
       let! result = Database.getAll cnf.connectionString
@@ -93,7 +94,13 @@ module Controller =
         return raise ex
     }
 
+  //set_status_code 401 >=> text "Access Denied"
+
   let resource = controller {
+    //index (requires_role "admin" accessDenied) //>=> indexAction
+    //index accessDenied
+    //plug [Index; Show] (requires_role "admin" denyAccess)
+    //plug [Index] (allowAccessByRoles ["admin"; "staff"; "faculty"])
     index indexAction
     show showAction
     add addAction
@@ -101,6 +108,5 @@ module Controller =
     create createAction
     update updateAction
     delete deleteAction
-    //login loginAction
   }
 

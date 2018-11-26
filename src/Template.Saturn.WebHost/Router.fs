@@ -11,7 +11,6 @@ open Giraffe
 open System.Security.Claims
 open Microsoft.AspNetCore.Http
 
-
 let login = pipeline {
     requires_authentication (fun next ctx -> htmlView (Login.layout ctx) next ctx)
     //plug print_user_details
@@ -36,6 +35,7 @@ let loggedInView = router {
     pipe_through login
     pipe_through protectFromForgery
     forward "/books" Books.Controller.resource 
+    forwardf "/books/%s" (fun s -> Books.Controller.resource)
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
 }
 
@@ -50,10 +50,12 @@ let browserRouter = router {
     pipe_through browser //Use the default browser pipeline
     forward "" defaultView //Use the default view
     get "/books" loggedInView
+    getf "/books/%s" (fun s -> loggedInView)
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 
     get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
+    post "/books" loggedInView
 }
 
 

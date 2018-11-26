@@ -84,7 +84,7 @@ module Views =
           input [_type "submit"; _class "button is-link"; _value "Submit"]
         ]
         div [_class "control"] [
-          a [_class "button is-text"; _href (Links.index ctx)] [rawText "Cancel"]
+          a [_class "button is-text"; _href (Helpers.cleanLink(Links.index ctx))] [rawText "Cancel"]
         ]
       ]
 

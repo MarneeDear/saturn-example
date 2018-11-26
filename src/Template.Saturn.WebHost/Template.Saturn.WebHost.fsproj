@@ -6,7 +6,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Authentication\Cas.fs" />
+    <Compile Include="Access\Authorization.fs" />
+    <Compile Include="Access\Cas.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Templates\AuthApp.fs" />

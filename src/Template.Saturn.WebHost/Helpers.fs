@@ -1,5 +1,5 @@
 ﻿module Helpers
 
-let cleanLink (link:string) =
+let removeTrailingSlash(link:string) =
   link.Remove(link.Length - 1, 1)
 

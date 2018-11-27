@@ -10,6 +10,7 @@
     <Compile Include="Access\Cas.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Helpers.fs" />
     <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
     <Compile Include="Templates\Dashboard.fs" />

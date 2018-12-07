@@ -16,3 +16,5 @@ let onlyAllowAdmin = pipeline {
 let allowAccessByRoles roles = pipeline {
   requires_role_of roles denyAccess 
 }
+
+

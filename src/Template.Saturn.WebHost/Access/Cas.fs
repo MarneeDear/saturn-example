@@ -27,6 +27,8 @@ type ApplicationBuilder with
         new DirectoryServices.EdsClient(edsServerUrl, edsUserName,
             edsPassword) :> Interfaces.IEdsClient
 
+      //TODO: remove and replace with your roles, policies, claims, or resource assignment handlers
+      //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-2.1
       let getClaims (attributes: UserAttribute list) =
         let identity = new ClaimsIdentity()
         for attr in attributes do 
@@ -34,8 +36,8 @@ type ApplicationBuilder with
             if attr.Name = "isMemberOf" then
               identity.AddClaim(new Claim(ClaimTypes.Role, value))
             else
-              identity.AddClaim(new Claim(attr.Name, value))
-            identity.AddClaim(new Claim(ClaimTypes.Role, "admin"))
+              identity.AddClaim(new Claim(attr.Name, value))              
+        identity.AddClaim(new Claim(ClaimTypes.Role, "admin")) //TODO: you don't want this in production. See TODO above
         identity
 
       let cookieEvents = new CookieAuthenticationEvents()

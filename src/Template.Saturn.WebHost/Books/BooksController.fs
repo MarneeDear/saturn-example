@@ -7,6 +7,8 @@ open Saturn
 open Authorization
 
 module Controller =
+  open Giraffe
+
   let indexAction (ctx : HttpContext) =
      
     task {
@@ -99,8 +101,9 @@ module Controller =
   let resource = controller {
     //index (requires_role "admin" accessDenied) //>=> indexAction
     //index accessDenied
-    //plug [Index; Show] (requires_role "admin" denyAccess)
+    //plug [Index; Show] (requiresRole "admin" denyAccess)
     //plug [Index] (allowAccessByRoles ["admin"; "staff"; "faculty"])
+    //plug [Index] (pipeline { requires_role "admin"  denyAccess })
     index indexAction
     show showAction
     add addAction

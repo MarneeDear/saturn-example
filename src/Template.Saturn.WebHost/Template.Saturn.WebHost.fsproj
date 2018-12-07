@@ -6,6 +6,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Compile Include="Access\Policy.fs" />
     <Compile Include="Access\Authorization.fs" />
     <Compile Include="Access\Cas.fs" />
     <Compile Include="Database.fs" />
@@ -46,9 +50,15 @@
     <ProjectReference Include="..\Template.Saturn.Infrastructure\Template.Saturn.Infrastructure.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.5.2" />
     <PackageReference Update="Giraffe" Version="2.0.0" />
     <PackageReference Update="Saturn" Version="0.7.5" />
   </ItemGroup>
+  <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

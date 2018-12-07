@@ -15,11 +15,28 @@ open Microsoft.AspNetCore.Builder
 open System.Security.Claims
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Authentication.Cookies
+open FSharp.Configuration
+
+//type ConfigSettings = AppSettings<"web.config">
+type ConfigSettings = YamlConfig<"config.yaml">
+let config = ConfigSettings()
+
 
 let endpointPipe = pipeline {
     plug head
     plug requestId
 }
+
+let getConfig =
+    {
+      connectionString = "DataSource=database.sqlite"
+      edsUrl = config.EDS.Url
+      webAuthUrl = config.WebAuth.Url
+      edsUserName = config.EDS.UserName
+      edsPassword = config.EDS.Password
+
+    }
+
 let app = application {
     pipe_through endpointPipe
     logging (fun (builder: ILoggingBuilder) -> builder.SetMinimumLevel(LogLevel.Trace) |> ignore)
@@ -29,9 +46,10 @@ let app = application {
     memory_cache
     use_static "static"
     use_gzip
-    use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
+    use_config (fun _ -> getConfig )
     use_iis
-    use_cas"https://webauth.arizona.edu/webauth" "https://eds.arizona.edu/people" "medportal-dev" "jQbX0XxhkH73coapHhuB0Pe5Rrovyn"
+    use_cas (config.WebAuth.Url) (config.EDS.Url) config.EDS.UserName config.EDS.Password
+    //consider using force_ssl even in developement. find out about setting up certs
 }
 
 [<EntryPoint>]

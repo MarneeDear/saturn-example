@@ -1,0 +1,8 @@
+﻿DB:
+  ConnectionString: "DataSource=database.sqlite"
+EDS:
+  Url: https://eds.arizona.edu/people
+  UserName: medportal-dev
+  Password: jQbX0XxhkH73coapHhuB0Pe5Rrovyn
+WebAuth:
+  Url: https://webauth.arizona.edu/webauth

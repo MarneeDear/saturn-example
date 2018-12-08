@@ -18,23 +18,25 @@ open Microsoft.AspNetCore.Authentication.Cookies
 open FSharp.Configuration
 
 //type ConfigSettings = AppSettings<"web.config">
-type ConfigSettings = YamlConfig<"config.yaml">
-let config = ConfigSettings()
+
+type RuntimeConfigSettings = YamlConfig<"config.yaml">
+let config = RuntimeConfigSettings()
 
 
 let endpointPipe = pipeline {
     plug head
     plug requestId
+    //plug (print_something config.EDS.UserName)
+    //plug (print_something config.EDS.Password)
 }
 
 let getConfig =
     {
       connectionString = "DataSource=database.sqlite"
-      edsUrl = config.EDS.Url
-      webAuthUrl = config.WebAuth.Url
+      edsUrl = string config.EDS.Url
+      webAuthUrl = string config.WebAuth.Url
       edsUserName = config.EDS.UserName
       edsPassword = config.EDS.Password
-
     }
 
 let app = application {
@@ -48,8 +50,9 @@ let app = application {
     use_gzip
     use_config (fun _ -> getConfig )
     use_iis
-    use_cas (config.WebAuth.Url) (config.EDS.Url) config.EDS.UserName config.EDS.Password
-    //consider using force_ssl even in developement. find out about setting up certs
+    use_cas (string config.WebAuth.Url) (string config.EDS.Url) config.EDS.UserName config.EDS.Password
+    //force_ssl
+    //consider using force_ssl even in development. find out about setting up the port to handle this
 }
 
 [<EntryPoint>]

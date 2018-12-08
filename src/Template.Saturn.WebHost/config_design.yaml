@@ -1,0 +1,8 @@
+﻿DB:
+  ConnectionString: REPLACEME
+EDS:
+  Url: REPLACEME
+  UserName: REPLACEME
+  Password: REPLACEME
+WebAuth:
+  Url: REPLACEME

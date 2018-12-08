@@ -43,7 +43,6 @@ NUGET
     Microsoft.Extensions.Options (2.1.1)
     Newtonsoft.Json (11.0.2)
     NHamcrest (2.0.1)
-    NLog (4.5.11)
     Saturn (0.7.6)
       FSharp.Core (>= 4.2.3)
       Giraffe (>= 1.1)
@@ -81,12 +80,6 @@ NUGET
     xunit.extensibility.execution (2.4.1)
       xunit.extensibility.core (2.4.1)
     xunit.runner.visualstudio (2.4.1)
-  remote: https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
-    COM.Core (0.5.25)
-    COM.Infrastructure (0.5.28)
-      COM.Core (>= 0.5.25)
-      Newtonsoft.Json (>= 9.0.1)
-      NLog (>= 4.4.1)
 
 GROUP Build
 NUGET

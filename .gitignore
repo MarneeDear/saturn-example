@@ -9,3 +9,4 @@ artifacts/
 *.pubxml
 *.pubxml.user
 src/Template.Saturn.WebHost/Properties
+*config.yaml

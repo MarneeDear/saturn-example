@@ -37,7 +37,7 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
                     div [_class "navbar-start"; _id "navstart"] [
                         a [_class "navbar-item"; _href "/dashboard"; _id "dashboard"] [rawText "Dashboard"]
                         a [_class "navbar-item"; _href "/studentaffairs"; _id "studentaffairs"] [rawText "Student Affairs"]
-                        a [_class "navbar-item"; _href "/curriculuaraffairs"; _id "caffairs"] [rawText "Curricular Affairs"]
+                        a [_class "navbar-item"; _href "/curricularaffairs"; _id "caffairs"] [rawText "Curricular Affairs"]
                         a [_class "navbar-item"; _href "/guide"; _id "guide"] [rawText "Guide"]
                         a [_class "navbar-item"; _href "/logout"; _id "logout"] [rawText "Logout"]
                     ]

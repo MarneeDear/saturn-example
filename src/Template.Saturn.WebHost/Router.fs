@@ -3,7 +3,7 @@ module Router
 open Saturn
 open Giraffe.Core
 open Giraffe.ResponseWriters
-open Books
+//open Books
 open Login
 open Logout
 open Dashboard
@@ -35,7 +35,8 @@ type UserCredentialsResponse = { user_name : string }
 let loggedInView = router {
     pipe_through login
     pipe_through protectFromForgery
-    forward "/books" Books.Controller.resource 
+    forward "/curricularaffairs" CurricularAffairs.Controller.resource
+    //forward "/books" Books.Controller.resource 
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
 }
 
@@ -50,6 +51,7 @@ let browserRouter = router {
     pipe_through browser //Use the default browser pipeline
     forward "" defaultView //Use the default view
     get "/books" loggedInView
+    get "/curricularaffairs" loggedInView
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 

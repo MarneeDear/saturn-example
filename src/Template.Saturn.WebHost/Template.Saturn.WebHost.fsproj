@@ -7,7 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authentication\Cas.fs" />
-    <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
@@ -19,8 +18,10 @@
     <Compile Include="Templates\InternalError.fs" />
     <Compile Include="Books\BooksModel.fs" />
     <Compile Include="Books\BooksViews.fs" />
-    <Compile Include="Books\BooksRepository.fs" />
     <Compile Include="Books\BooksController.fs" />
+    <Compile Include="Books\BooksRepository.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsViews.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsController.fs" />
     <Compile Include="Router.fs" />
     <Compile Include="Program.fs" />
     <Content Include="*.sqlite">
@@ -34,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="paket.references" />
+    <None Include="config.yaml" />
+    <None Include="config_design.yaml" />
     <None Include="static\app.js" />
     <None Include="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -45,8 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.5.2" />
-    <PackageReference Update="Giraffe" Version="2.0.0" />
-    <PackageReference Update="Saturn" Version="0.7.5" />
+    <PackageReference Update="Giraffe" Version="3.4.0" />
+    <PackageReference Update="Saturn" Version="0.8.0" />
   </ItemGroup>
+  <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

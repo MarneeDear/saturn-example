@@ -15,10 +15,30 @@ open Microsoft.AspNetCore.Builder
 open System.Security.Claims
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Authentication.Cookies
+open FSharp.Configuration
+
+type RuntimeConfigSettings = YamlConfig<"config.yaml">
+let config = RuntimeConfigSettings()
+
+let debug thing = 
+    fun next ctx ->
+        Printf.printfn "DEBUG [%s]" thing
+        next ctx
+
+let getConfig =
+    {
+      connectionString = "DataSource=database.sqlite"
+      edsUrl = string config.EDS.Url
+      webAuthUrl = string config.WebAuth.Url
+      edsUserName = config.EDS.UserName
+      edsPassword = config.EDS.Password
+    }
 
 let endpointPipe = pipeline {
     plug head
     plug requestId
+    plug (debug config.EDS.UserName)
+    plug (debug config.EDS.Password)
 }
 let app = application {
     pipe_through endpointPipe
@@ -29,9 +49,10 @@ let app = application {
     memory_cache
     use_static "static"
     use_gzip
-    use_config (fun _ -> {connectionString = "DataSource=database.sqlite"} ) //TODO: Set development time configuration
+    use_config (fun _ -> getConfig ) //TODO: Set development time configuration
     use_iis
-    use_cas"https://webauth.arizona.edu/webauth"
+    use_cas "https://webauth.arizona.edu/webauth"
+    //force_ssl (Nullable<int>(8085))
 }
 
 [<EntryPoint>]

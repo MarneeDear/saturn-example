@@ -19,8 +19,7 @@ let layout (content: XmlNode list) =
         ]
         body [] [
 
-            yield div [_style "background-color:#0c234b; height:50px; 
-            padding-top:10px; padding-bottom:10px;"] [
+            yield div [_style "background-color:#0c234b; height:50px; padding-top:10px; padding-bottom:10px;"] [
                 div [_class "container uahslogo"] [
                     img [_src "/uahs-banner2x.png"]
                 ]

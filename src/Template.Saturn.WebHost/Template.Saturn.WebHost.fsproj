@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net461</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <UserSecretsId>1e08373c-b8a3-4788-8770-e059529be4b5</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authentication\Cas.fs" />
@@ -30,14 +31,50 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
-    <Content Include="static\app.css" />
-    <Content Include="static\favicon.ico" />
+    <Content Include="static\app.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\bannerlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\bannerlogo1x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\bannerlogo2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\blockangleblue2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\blockangleblue_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="paket.references" />
+    <Content Include="static\logo_dark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\logo_light.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\uahs-banner-short.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\uahs-banner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\uahs-banner2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="config.yaml" />
     <None Include="config_design.yaml" />
-    <None Include="static\app.js" />
+    <None Include="static\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

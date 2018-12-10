@@ -21,7 +21,7 @@ let index =
             div [_class "tile is-ancestor"] [
                 div [_class "tile is-parent is-4"] [
                     article [_class "tile is-child notification is-primary box"] [
-                        a [_class "title "] [rawText "Guides (WIP)"]
+                        a [_class "title "; _href "https://steemit.com/@marnee"] [rawText "My Blog"]
                     ]
                 ]
                 div [_class "tile is-parent is-4"] [

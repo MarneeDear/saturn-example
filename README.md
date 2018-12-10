@@ -1,7 +1,9 @@
 The Saturn App Template is best developed with Visual Studio Code or Visual Studio 2017 (Community works).
 
 More about Saturn here
+
 https://saturnframework.org/docs/
+
 http://kcieslak.io/Reinventing-MVC-for-web-programming-with-F
 
 This is for pure F# web applications and should be preferred over the original web app template.
@@ -9,6 +11,7 @@ This is for pure F# web applications and should be preferred over the original w
 You can target netstandard2.0, but in that case you wont be able to use the FSharp.Data SqlCommandProvider and some other F# type providers.
 
 Here is a list of the possible target frameworks.
+
 https://docs.microsoft.com/en-us/dotnet/standard/frameworks
 
 ## Optional libraries
@@ -30,8 +33,9 @@ FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 ## Optional Recommendations
 
 * TickSpec for BDD
-https://github.com/fsprojects/TickSpec
-* Canopy for UI tests https://lefthandedgoat.github.io/canopy/
+  * https://github.com/fsprojects/TickSpec
+* Canopy for UI tests 
+  * https://lefthandedgoat.github.io/canopy/
 
 # How to host development on IIS
 By default this template will run as self-hosted using Kestrel, but you can host on IIS too.
@@ -43,4 +47,14 @@ By default this template will run as self-hosted using Kestrel, but you can host
 	1) Make sure processPath points to where the executable is stored when the project is built. This is template puts it here: .\bin\Debug\net461\Template.Saturn.WebHost.exe
 
 ## You can also host on IIS as a published site
-The above steps will get you there but instead of pointing to the WebHost folder, use Visual Studio or `dotnet publish` to create a published site and use that in IIS. You may need to copy over the web.config file manually. I don't know why.
+
+The above steps will get you there but instead of pointing to the WebHost folder, use Visual Studio or `dotnet publish` to create a published site and use that in IIS.
+
+## Adding packages
+
+```bash
+./paket/paket.exe add PACKAGENAME --project <your project>
+```
+```bash
+dotnet restore src/Template.Saturn.Project.fspro
+```

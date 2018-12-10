@@ -56,6 +56,7 @@ let browserRouter = router {
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 
     get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
+    get "/blog" (redirectTo false "https://steemit.com/@marnee")
 }
 
 

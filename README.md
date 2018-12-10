@@ -70,3 +70,9 @@ By default this template will run as self-hosted using Kestrel, but you can host
 ## You can also host on IIS as a published site
 
 The above steps will get you there but instead of pointing to the WebHost folder, use Visual Studio or `dotnet publish` to create a published site and use that in IIS. You may need to copy over the web.config file manually. I don't know why.
+
+## I might be running on Azure
+
+https://saturn-example.azurewebsites.net/
+
+You can login with your Net ID.

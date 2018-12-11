@@ -56,5 +56,5 @@ The above steps will get you there but instead of pointing to the WebHost folder
 ./paket/paket.exe add PACKAGENAME --project <your project>
 ```
 ```bash
-dotnet restore src/Template.Saturn.Project.fspro
+dotnet restore src/Template.Saturn.Project.fsproj
 ```

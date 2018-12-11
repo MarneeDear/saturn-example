@@ -56,8 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.5.2" />
-    <PackageReference Update="Giraffe" Version="2.0.0" />
-    <PackageReference Update="Saturn" Version="0.7.5" />
+    <PackageReference Update="Giraffe" Version="3.4.0" />
+    <PackageReference Update="Saturn" Version="0.8.0" />
   </ItemGroup>
   <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />

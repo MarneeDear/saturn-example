@@ -10,21 +10,27 @@ nuget FSharp.Core == 4.5.0
 nuget FSharp.Data == 3.0
 nuget Saturn
 nuget Giraffe 
+//https://github.com/UACOMTucson/AspNet.Security.CAS
 nuget AspNetCore.Security.CAS
 nuget Simple.Migrations
 nuget Microsoft.Data.Sqlite
+//https://demystifyfp.gitbook.io/fstoolkit-errorhandling/
 nuget FsToolkit.ErrorHandling
 nuget Dapper
 nuget FsUnit.xUnit == 3.2.0
 nuget xunit.abstractions
 nuget xunit.runner.visualstudio
-nuget Chessie
-nuget FSharp.Configuration == 2.0.0-alpha2
+nuget FSharp.Configuration
+//https://github.com/serilog/serilog-aspnetcore
+nuget Serilog.AspNetCore
+nuget Serilog.Sinks.Console
 
 clitool dotnet-saturn
 
 nuget COM.Core == 0.5.33-dev
 nuget COM.Infrastructure == 0.5.34-dev
+
+nuget Chessie
 
 group Build
   source https://api.nuget.org/v3/index.json
@@ -32,4 +38,3 @@ group Build
   nuget FAKE
   nuget NuGet.CommandLine
   nuget xunit.runner.console
-

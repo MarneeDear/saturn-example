@@ -6,7 +6,7 @@ NUGET
       FSharp.Core
     Dapper (1.50.5)
     dotnet-saturn (0.7.2) - clitool: true
-    FSharp.Configuration (2.0.0-alpha2)
+    FSharp.Configuration (1.5)
       FSharp.Core (>= 4.0.0.1)
     FSharp.Core (4.5)
     FSharp.Data (3.0)
@@ -71,6 +71,10 @@ NUGET
       Microsoft.AspNetCore.Session (>= 2.1)
       Microsoft.AspNetCore.StaticFiles (>= 2.1)
       Microsoft.Extensions.Caching.Memory (>= 2.1)
+    Serilog (2.7.1)
+    Serilog.AspNetCore (2.1.1)
+    Serilog.Sinks.Console (3.1.1)
+      Serilog (>= 2.5)
     Simple.Migrations (0.9.19)
     System.Reflection.Emit (4.3)
     System.Reflection.Emit.Lightweight (4.3)

@@ -15,4 +15,7 @@ dotnet-saturn
 COM.Core
 COM.Infrastructure
 
+Serilog.AspNetCore
+Serilog.Sinks.Console
+
 Chessie

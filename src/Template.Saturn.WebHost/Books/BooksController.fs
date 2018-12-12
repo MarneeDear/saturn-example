@@ -5,12 +5,17 @@ open FSharp.Control.Tasks.ContextInsensitive
 open Config
 open Saturn
 open Authorization
+open Microsoft.Extensions.Logging
+
 
 module Controller =
   open Giraffe
 
   let indexAction (ctx : HttpContext) =
-     
+
+    let logger = ctx.GetLogger("Books.indexAction")
+    logger.LogError("TEST ME IN BOOKS CONTROLLER")     
+    //logger.LogInformation(logger.GetType().ToString())
     task {
       let cnf = Controller.getConfig ctx
       let! result = Database.getAll cnf.connectionString

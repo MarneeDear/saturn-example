@@ -5,6 +5,7 @@ open System
 open Fake
 open Fake.DotNet
 open Fake.Core.TargetOperators
+open Fake
 
 let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
 let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fake.IO.Path.getFullName
@@ -15,6 +16,10 @@ Core.Target.create "InstallDotNetCore" (fun _ ->
 
 Core.Target.create "Restore" (fun _ ->
     DotNet.restore (fun p -> p) appPath |> ignore
+)
+
+Core.Target.create "RenameConfig" (fun _ ->
+    FileHelper.Rename (appPath @@ "config.yaml") (appPath @@ "config_design.yaml") |> ignore
 )
 
 Core.Target.create "Build"  (fun _ ->
@@ -53,6 +58,7 @@ Core.Target.create "Publish" (fun _ ->
 
 "Clean"
   ==> "InstallDotNetCore"
+  ==> "RenameConfig"
   ==> "Build"
 
 "Clean"
@@ -61,11 +67,13 @@ Core.Target.create "Publish" (fun _ ->
 
 "Clean"
   ==> "InstallDotNetCore"
+  ==> "RenameConfig"
   ==> "Build"
   ==> "Test"
 
 "Clean"
   ==> "InstallDotNetCore"
+  ==> "RenameConfig"
   ==> "Build"
   ==> "Test"
   ==> "Publish"

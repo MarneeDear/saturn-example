@@ -18,7 +18,7 @@ Core.Target.create "Restore" (fun _ ->
 
 Core.Target.create "Build"  (fun _ ->
     //DotNetCli.Build(fun p -> {p with WorkingDir = appPath})
-    DotNet.build (fun p -> p) |> ignore
+    DotNet.build (fun p -> p) "src\Template.Saturn.WebHost" |> ignore
 )
 
 Core.Target.create "Run" (fun _ -> 

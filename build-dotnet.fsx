@@ -5,7 +5,7 @@ open System
 open Fake
 open Fake.DotNet
 open Fake.Core.TargetOperators
-open Fake
+open Fake.IO
 
 let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
 let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fake.IO.Path.getFullName

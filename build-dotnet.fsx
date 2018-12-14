@@ -14,7 +14,7 @@ Core.Target.create "InstallDotNetCore" (fun _ ->
 )
 
 Core.Target.create "Restore" (fun _ ->
-    DotNet.restore (fun p -> p) "src\Template.Saturn.WebHost" |> ignore
+    DotNet.restore (fun p -> p) appPath |> ignore
 )
 
 Core.Target.create "Build"  (fun _ ->
@@ -47,7 +47,7 @@ Core.Target.create "Clean" (fun _ ->
 )
 
 Core.Target.create "Publish" (fun _ ->
-    DotNet.publish (fun p -> { p with OutputPath = Some "../../published"} ) "src\Template.Saturn.WebHost"
+    DotNet.publish (fun p -> { p with OutputPath = Some "../../published"} ) appPath
 )
 
 

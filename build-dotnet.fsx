@@ -1,10 +1,9 @@
 #r @"packages/build/FAKE/tools/FakeLib.dll"
 
 open System
-
 open Fake
 open Fake.DotNet
-open Fake.Core.TargetOperators
+open Fake.Core
 open Fake.IO
 
 let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
@@ -18,8 +17,11 @@ Core.Target.create "Restore" (fun _ ->
     DotNet.restore (fun p -> p) appPath |> ignore
 )
 
+open Fake.IO.FileSystemOperators
+
 Core.Target.create "RenameConfig" (fun _ ->
-    FileHelper.Rename (appPath @@ "config.yaml") (appPath @@ "config_design.yaml") |> ignore
+    if not (File.exists(appPath @@ "config.yaml"))
+        then Fake.IO.Shell.rename (appPath @@ "config.yaml") (appPath @@ "config_design.yaml") |> ignore
 )
 
 Core.Target.create "Build"  (fun _ ->
@@ -55,8 +57,10 @@ Core.Target.create "Publish" (fun _ ->
     DotNet.publish (fun p -> { p with OutputPath = Some "../../published"} ) appPath
 )
 
+open Fake.Core.TargetOperators
 
-"Clean"
+
+"Clean" 
   ==> "InstallDotNetCore"
   ==> "RenameConfig"
   ==> "Build"

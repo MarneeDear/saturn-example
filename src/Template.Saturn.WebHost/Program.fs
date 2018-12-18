@@ -32,6 +32,7 @@ let getConfig =
       webAuthUrl = string config.WebAuth.Url
       edsUserName = config.EDS.UserName
       edsPassword = config.EDS.Password
+      configSettingExample = config.General.Example
     }
 
 let endpointPipe = pipeline {

@@ -28,7 +28,7 @@ let layout (content: XmlNode list) (ctx:HttpContext) =
             yield nav [ _class "navbar has-shadow is-pulled-right" ] [
                 div [_class "navbar-brand"] [
                     div [_class "navbar-burger burger"; attr "data-target" "navMenu"] [
-                        span [] [] //PUT LOGOUT HERE????
+                        span [] [] 
                         span [] []
                         span [] []
                     ]

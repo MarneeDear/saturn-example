@@ -21,7 +21,8 @@
     <Compile Include="Books\BooksViews.fs" />
     <Compile Include="Books\BooksController.fs" />
     <Compile Include="Books\BooksRepository.fs" />
-    <Compile Include="CurricularAffairs\CurricularAffairsViews.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsModel.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsView.fs" />
     <Compile Include="CurricularAffairs\CurricularAffairsController.fs" />
     <Compile Include="Router.fs" />
     <Compile Include="Program.fs" />

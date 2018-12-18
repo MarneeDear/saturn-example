@@ -18,5 +18,6 @@
     <PackageReference Include="FSharp.Core" Version="4.5.2" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
+  <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -19,5 +19,6 @@
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
     <PackageReference Include="FsToolkit.ErrorHandling" Version="0.0.9" />
   </ItemGroup>
+  <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

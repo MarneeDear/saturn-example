@@ -9,11 +9,8 @@
     <None Include="config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="Access\Policy.fs" />
-    <Compile Include="Access\Authorization.fs" />
-    <Compile Include="Access\Cas.fs" />
-    <Compile Include="Database.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Database.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
@@ -23,6 +20,12 @@
     <Compile Include="Templates\Index.fs" />
     <Compile Include="Templates\NotFound.fs" />
     <Compile Include="Templates\InternalError.fs" />
+    <Compile Include="Access\Policy.fs" />
+    <Compile Include="Access\Authorization.fs" />
+    <Compile Include="Access\Cas.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsModel.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsView.fs" />
+    <Compile Include="CurricularAffairs\CurricularAffairsController.fs" />
     <Compile Include="Books\BooksModel.fs" />
     <Compile Include="Books\BooksViews.fs" />
     <Compile Include="Books\BooksRepository.fs" />
@@ -32,6 +35,10 @@
     <Content Include="*.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="App.config" />
+    <Content Remove="secrets.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

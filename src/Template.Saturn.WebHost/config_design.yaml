@@ -6,3 +6,5 @@ EDS:
   Password: REPLACEME
 WebAuth:
   Url: REPLACEME
+General:
+  ConfigSettingExample: REPLACEME

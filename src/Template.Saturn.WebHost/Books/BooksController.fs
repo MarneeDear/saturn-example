@@ -108,7 +108,7 @@ module Controller =
     //index accessDenied
     //plug [Index; Show] (requiresRole "admin" denyAccess)
     //plug [Index] (allowAccessByRoles ["admin"; "staff"; "faculty"])
-    //plug [Index] (pipeline { requires_role "admin"  denyAccess })
+    plug [Index] (pipeline { requires_role "admin"  denyAccess })
     index indexAction
     show showAction
     add addAction

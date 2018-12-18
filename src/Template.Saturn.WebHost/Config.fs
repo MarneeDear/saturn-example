@@ -6,4 +6,5 @@ type Config = {
     webAuthUrl : string
     edsUserName : string
     edsPassword : string
+    configSettingExample : string
 }

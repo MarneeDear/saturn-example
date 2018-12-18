@@ -42,6 +42,7 @@ let getConfig =
       webAuthUrl = string config.WebAuth.Url
       edsUserName = config.EDS.UserName
       edsPassword = config.EDS.Password
+      configSettingExample = config.General.ConfigSettingExample
     }
 
 let loggingConfig = new LoggerConfiguration()

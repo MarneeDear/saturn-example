@@ -7,6 +7,7 @@ open Books
 open Login
 open Logout
 open Dashboard
+open CurricularAffairs
 open Giraffe
 open System.Security.Claims
 open Microsoft.AspNetCore.Http
@@ -32,11 +33,12 @@ let defaultView = router {
 type UserCredentialsResponse = { user_name : string }  
 
 let loggedInView = router {
-    pipe_through login
     pipe_through protectFromForgery
+    pipe_through login
     forward "/books" Books.Controller.resource 
-    forwardf "/books/%s" (fun s -> Books.Controller.resource)
+    forwardf "/books/%s" (fun (_ : string) -> Books.Controller.resource)
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
+    forward "/CurricularAffairs" CurricularAffairs.Controller.resource
 }
 
 let isAuthenticated (ctx:HttpContext) =
@@ -49,13 +51,15 @@ let browserRouter = router {
     not_found_handler (htmlView NotFound.layout) //Use the default 404 webpage
     pipe_through browser //Use the default browser pipeline
     forward "" defaultView //Use the default view
+    get "/CurricularAffairs" loggedInView
     get "/books" loggedInView
-    getf "/books/%s" (fun s -> loggedInView)
+    getf "/books/add" (fun s -> loggedInView)
+    getf "/books/%s" (fun (_ : string) -> loggedInView)
+    post "/books" loggedInView
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 
     get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
-    post "/books" loggedInView
 }
 
 

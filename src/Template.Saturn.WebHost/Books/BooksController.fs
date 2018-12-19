@@ -58,6 +58,9 @@ module Controller =
     }
 
   let createAction (ctx: HttpContext) =
+    let logger = ctx.GetLogger("Books.createAction")
+    logger.LogError("CREATE THING")     
+
     task {
       let! input = Controller.getModel<Book> ctx
       let validateResult = Validation.validate input
@@ -67,7 +70,7 @@ module Controller =
         let! result = Database.insert cnf.connectionString input
         match result with
         | Ok _ ->
-          return! Controller.redirect ctx (Links.index ctx)
+          return! Controller.redirect ctx (Helpers.removeTrailingSlash (Links.index ctx))
         | Error ex ->
           return raise ex
       else
@@ -75,6 +78,9 @@ module Controller =
     }
 
   let updateAction (ctx: HttpContext) (id : string) =
+    let logger = ctx.GetLogger("Books.updateAction")
+    logger.LogError("UPDATE THING")     
+
     task {
       let! input = Controller.getModel<Book> ctx
       let validateResult = Validation.validate input
@@ -83,7 +89,7 @@ module Controller =
         let! result = Database.update cnf.connectionString input
         match result with
         | Ok _ ->
-          return! Controller.redirect ctx (Links.index ctx)
+          return! Controller.redirect ctx (Helpers.removeTrailingSlash (Links.index ctx))
         | Error ex ->
           return raise ex
       else
@@ -108,7 +114,7 @@ module Controller =
     //index accessDenied
     //plug [Index; Show] (requiresRole "admin" denyAccess)
     //plug [Index] (allowAccessByRoles ["admin"; "staff"; "faculty"])
-    plug [Index] (pipeline { requires_role "admin"  denyAccess })
+    plug [Index] (pipeline { requires_role "admin" accessDenied })
     index indexAction
     show showAction
     add addAction

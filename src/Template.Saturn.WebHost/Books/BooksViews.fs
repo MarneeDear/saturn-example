@@ -3,6 +3,7 @@ namespace Books
 open Microsoft.AspNetCore.Http
 open Giraffe.GiraffeViewEngine
 open Saturn
+open Saturn.CSRF.View.Giraffe
 
 module Views =
 
@@ -90,7 +91,7 @@ module Views =
 
     let cnt = [
       div [_class "container "] [
-        form [ _action (if isUpdate then Links.withId ctx o.Value.id else Links.index ctx ); _method "post"] [
+         protectedForm ctx [ _action (if isUpdate then Links.withId ctx o.Value.id else Helpers.removeTrailingSlash(Links.index ctx) ); _method "post"] [
           if not validationResult.IsEmpty then
             yield validationMessage
           yield field (fun i -> (string i.id)) "Id" "id" 

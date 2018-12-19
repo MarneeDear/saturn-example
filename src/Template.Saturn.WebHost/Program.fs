@@ -50,11 +50,6 @@ loggingConfig.MinimumLevel.Debug() |> ignore
 loggingConfig.MinimumLevel.Override("Microsoft", LogEventLevel.Information) |> ignore
 loggingConfig.Enrich.FromLogContext() |> ignore
 loggingConfig.WriteTo.Console() |> ignore
-//loggingConfig.CreateLogger()
-
-//Log.Logger <- loggingConfig.CreateLogger()
-
-//new LoggerConfiguration().
 
 let app = application {
     pipe_through endpointPipe
@@ -71,6 +66,7 @@ let app = application {
     use_config (fun _ -> getConfig )
     use_iis
     use_cas (string config.WebAuth.Url) (string config.EDS.Url) config.EDS.UserName config.EDS.Password
+    use_antiforgery
     //force_ssl
     //consider using force_ssl even in development. find out about setting up the port to handle this
 }
@@ -79,5 +75,4 @@ let app = application {
 let main _ =
     printfn "Working directory - %s" (System.IO.Directory.GetCurrentDirectory())
     run app
-    //Log.Information("HELLO SERILOG")
     0 // return an integer exit code

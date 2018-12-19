@@ -3,6 +3,7 @@
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks.ContextInsensitive
 open Config
+open Authorization
 open Saturn
 open Giraffe
 open Microsoft.Extensions.Logging
@@ -22,5 +23,9 @@ module Controller =
         }
 
     let resource = controller {
+        plug [Index; Show] (pipeline { requires_role_of (getAuthorizedRoles CurricularAffairs Access.View)  accessDenied })
+        plug [Add; Create] (pipeline { requires_role_of (getAuthorizedRoles CurricularAffairs Access.Create)  accessDenied })
+        plug [Edit; Update; Patch] (pipeline { requires_role_of (getAuthorizedRoles CurricularAffairs Access.Update)  accessDenied })
+        plug [Delete; DeleteAll] (pipeline { requires_role_of (getAuthorizedRoles CurricularAffairs Access.Delete)  accessDenied })
         index indexAction
     }

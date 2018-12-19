@@ -14,6 +14,7 @@
     <Compile Include="Helpers.fs" />
     <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
+    <Compile Include="Templates\AccessDenied.fs" />
     <Compile Include="Templates\Dashboard.fs" />
     <Compile Include="Templates\Logout.fs" />
     <Compile Include="Templates\Login.fs" />

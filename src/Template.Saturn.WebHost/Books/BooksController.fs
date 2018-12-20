@@ -102,7 +102,7 @@ module Controller =
       let! result = Database.delete cnf.connectionString id
       match result with
       | Ok _ ->
-        return! Controller.redirect ctx (Links.index ctx)
+        return! Controller.redirect ctx (Helpers.removeTrailingSlash (Links.index ctx))
       | Error ex ->
         return raise ex
     }

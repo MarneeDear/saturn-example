@@ -17,6 +17,11 @@ let login = pipeline {
     //plug print_user_details
 }
 
+let notFound = pipeline { 
+    set_status_code 401
+    render_html NotFound.layout
+}//Use the default 404 webpage
+
 let browser = pipeline {
     plug acceptHtml
     plug putSecureBrowserHeaders
@@ -35,8 +40,14 @@ type UserCredentialsResponse = { user_name : string }
 let loggedInView = router {
     pipe_through protectFromForgery
     pipe_through login
+    //get "/books" Books.Controller.resource
+    //getf "/books/add" (fun s -> Books.Controller.resource)
+    //deletef "/books/%s" (fun (x : string) -> Books.Controller.resource)
+    //getf "/books/%s" (fun (x : string) -> Books.Controller.resource)
+    //post "/books" Books.Controller.resource
+
     forward "/books" Books.Controller.resource 
-    forwardf "/books/%s" (fun (_ : string) -> Books.Controller.resource)
+    forwardf "/books/%s" (fun (x : string) -> Books.Controller.resource)    
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
     forward "/CurricularAffairs" CurricularAffairs.Controller.resource
 }
@@ -48,12 +59,16 @@ let isAuthenticated (ctx:HttpContext) =
         (Giraffe.Auth.challenge "CAS")
 
 let browserRouter = router {
-    not_found_handler (htmlView NotFound.layout) //Use the default 404 webpage
+    not_found_handler notFound
     pipe_through browser //Use the default browser pipeline
     forward "" defaultView //Use the default view
     get "/CurricularAffairs" loggedInView
+    //forward "/books" loggedInView
+    //forwardf "/books/%s" (fun (x : string) -> loggedInView)    
+
     get "/books" loggedInView
-    getf "/books/add" (fun s -> loggedInView)
+    getf "/books/add" (fun _ -> loggedInView)
+    deletef "/books/%s" (fun (_ : string) -> Books.Controller.resource)
     getf "/books/%s" (fun (_ : string) -> loggedInView)
     post "/books" loggedInView
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)

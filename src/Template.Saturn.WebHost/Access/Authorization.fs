@@ -46,6 +46,7 @@ let allowAccessByRoles roles = pipeline {
 //Use FSharp.Data.SqlClient http://fsprojects.github.io/FSharp.Data.SqlClient/index.html
 //You could also refactor to use policy based authorizations
 //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-2.2
+//YOU might also consider capability based security described by Scott Wlaschin https://fsharpforfunandprofit.com/posts/capability-based-security/
 let getAuthorizedRoles resource access =
     match resource, access with
     | CurricularAffairs, View -> ["admin";"pcoord"]

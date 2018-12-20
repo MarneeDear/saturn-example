@@ -33,7 +33,8 @@ function addDeleteButtons () {
         xhr.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         xhr.onload = function () {
           window.location.reload(false);
-        }
+          }
+        xhr.withCredentials = true;
         xhr.send(null);
       });
     });

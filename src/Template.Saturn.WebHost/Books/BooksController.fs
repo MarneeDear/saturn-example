@@ -26,7 +26,7 @@ module Controller =
         return raise ex
     }
 
-  let showAction (ctx: HttpContext) (id : string) =
+  let showAction (ctx: HttpContext) (id : int64) =
     task {
       let cnf = Controller.getConfig ctx
       let! result = Database.getById cnf.connectionString id
@@ -37,6 +37,7 @@ module Controller =
         return NotFound.layout
       | Error ex ->
         return raise ex
+      //return Controller.text ctx "YOU SEE ME"
     }
 
   let addAction (ctx: HttpContext) =
@@ -44,7 +45,10 @@ module Controller =
       return Views.add ctx None Map.empty
     }
 
-  let editAction (ctx: HttpContext) (id : string) =
+  let editAction (ctx: HttpContext) (id : int64) =
+    let logger = ctx.GetLogger("Books.editAction")
+    logger.LogError("EDIT THING")     
+
     task {
       let cnf = Controller.getConfig ctx
       let! result = Database.getById cnf.connectionString id
@@ -55,6 +59,7 @@ module Controller =
         return NotFound.layout
       | Error ex ->
         return raise ex
+      //return Controller.text ctx  "YOU FOUND ME"
     }
 
   let createAction (ctx: HttpContext) =
@@ -77,7 +82,7 @@ module Controller =
         return! Controller.renderHtml ctx (Views.add ctx (Some input) validateResult)
     }
 
-  let updateAction (ctx: HttpContext) (id : string) =
+  let updateAction (ctx: HttpContext) (id : int64) =
     let logger = ctx.GetLogger("Books.updateAction")
     logger.LogError("UPDATE THING")     
 
@@ -96,15 +101,16 @@ module Controller =
         return! Controller.renderHtml ctx (Views.edit ctx input validateResult)
     }
 
-  let deleteAction (ctx: HttpContext) (id : string) =
+  let deleteAction (ctx: HttpContext) (id : int64) =
     task {
-      let cnf = Controller.getConfig ctx
-      let! result = Database.delete cnf.connectionString id
-      match result with
-      | Ok _ ->
-        return! Controller.redirect ctx (Helpers.removeTrailingSlash (Links.index ctx))
-      | Error ex ->
-        return raise ex
+      //let cnf = Controller.getConfig ctx
+      //let! result = Database.delete cnf.connectionString id
+      //match result with
+      //| Ok _ ->
+      //  //return! Controller.redirect ctx (Helpers.removeTrailingSlash (Links.index ctx))
+      //| Error ex ->
+      //  return raise ex
+      return Controller.text ctx "YOU DELETED ME!"
     }
 
   //set_status_code 401 >=> text "Access Denied"
@@ -114,7 +120,7 @@ module Controller =
     //index accessDenied
     //plug [Index; Show] (requiresRole "admin" denyAccess)
     //plug [Index] (allowAccessByRoles ["admin"; "staff"; "faculty"])
-    plug [Index] (pipeline { requires_role "admin" accessDenied })
+    //plug [Index] (pipeline { requires_role "admin" accessDenied })
     index indexAction
     show showAction
     add addAction

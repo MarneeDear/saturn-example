@@ -40,14 +40,11 @@ type UserCredentialsResponse = { user_name : string }
 let loggedInView = router {
     pipe_through protectFromForgery
     pipe_through login
-    //get "/books" Books.Controller.resource
-    //getf "/books/add" (fun s -> Books.Controller.resource)
-    //deletef "/books/%s" (fun (x : string) -> Books.Controller.resource)
-    //getf "/books/%s" (fun (x : string) -> Books.Controller.resource)
-    //post "/books" Books.Controller.resource
 
     forward "/books" Books.Controller.resource 
-    forwardf "/books/%s" (fun (x : string) -> Books.Controller.resource)    
+    forward "/books/add" Books.Controller.resource
+    forwardf "/books/%d" (fun (x : int64) -> Books.Controller.resource)  
+    forwardf "/books/%d/edit" (fun (x : int64) -> Books.Controller.resource)  
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
     forward "/CurricularAffairs" CurricularAffairs.Controller.resource
 }
@@ -58,23 +55,36 @@ let isAuthenticated (ctx:HttpContext) =
     else
         (Giraffe.Auth.challenge "CAS")
 
+let getIntExample (id : int64) = text "YOU GOT ME"
+
 let browserRouter = router {
     not_found_handler notFound
     pipe_through browser //Use the default browser pipeline
     forward "" defaultView //Use the default view
     get "/CurricularAffairs" loggedInView
-    //forward "/books" loggedInView
-    //forwardf "/books/%s" (fun (x : string) -> loggedInView)    
-
-    get "/books" loggedInView
-    getf "/books/add" (fun _ -> loggedInView)
-    deletef "/books/%s" (fun (_ : string) -> Books.Controller.resource)
-    getf "/books/%s" (fun (_ : string) -> loggedInView)
-    post "/books" loggedInView
     get "/login" (fun next ctx -> htmlView (Login.layout ctx) next ctx)
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 
     get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
+
+    //THESE BOOKS ROUTES ALL WORK TOGETHER
+    get "/books" loggedInView
+    get "/books/add" loggedInView
+    getf "/books/%d" (fun (_ : int64) -> loggedInView)
+    getf "/books/%d/edit" (fun (s:int64) -> loggedInView)
+    post "/books" loggedInView
+    postf "/books/%d" (fun (_:int64) -> loggedInView)
+    //END WORKING ROUTES
+
+
+    //DONT WORK SO GOOD 
+    //404 but why?
+    deletef "/delete/%d" getIntExample //loggedInView)
+    delete "/delete" (text "DELETE ME??@")
+
+    //UNKNOWN
+    //patch "/books" loggedInView
+    //put "/books" loggedInView   
 }
 
 

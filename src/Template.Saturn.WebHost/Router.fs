@@ -55,7 +55,7 @@ let isAuthenticated (ctx:HttpContext) =
     else
         (Giraffe.Auth.challenge "CAS")
 
-let getIntExample (id : int64) = text "YOU GOT ME"
+let doDelete (id : string) = text (sprintf "YOU GOT ME %s" id)
 
 let browserRouter = router {
     not_found_handler notFound
@@ -79,8 +79,8 @@ let browserRouter = router {
 
     //DONT WORK SO GOOD 
     //404 but why?
-    deletef "/delete/%d" getIntExample //loggedInView)
-    delete "/delete" (text "DELETE ME??@")
+    deletef "/delete/%s" doDelete //loggedInView)
+    delete "/delete" (text "DELETE ME??")
 
     //UNKNOWN
     //patch "/books" loggedInView

@@ -1,0 +1,19 @@
+{
+  "name": "saturnapp",
+  "version": "1.0.0",
+  "description": "getting started with F# and Fable",
+  "main": "index.js",
+  "scripts": {
+    "test": "test-fable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://comit@comit.kilnhg.com/Templates/dotNet/saturnapp"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fable-compiler": "^2.1.8",
+    "fable-core": "^0.7.30"
+  }
+}

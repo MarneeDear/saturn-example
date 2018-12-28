@@ -11,3 +11,4 @@ artifacts/
 src/Template.Saturn.WebHost/Properties
 config.yaml
 src/Template.Saturn.WebHost/Template.Saturn.WebHost.fsproj.user
+node_modules

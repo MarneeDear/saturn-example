@@ -16,8 +16,9 @@ open Fake.IO
 
 let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
 let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fake.IO.Path.getFullName
+//TODO you wlll need to fill this in if using Fable and SAFE Stack
 //let serverPath = Path.getFullName "./src/Server"
-//let clientPath = Path.getFullName "./src/Client"
+let clientPath = Path.getFullName "./src/Template.Saturn.Client"
 //let deployDir = Path.getFullName "./deploy"
 
 let platformTool tool winTool =
@@ -66,7 +67,8 @@ Target.create "InstallClient" (fun _ ->
     printfn "Yarn version:"
     runTool yarnTool "--version" __SOURCE_DIRECTORY__
     runTool yarnTool "install --frozen-lockfile" __SOURCE_DIRECTORY__
-    //runDotNet "restore" clientPath
+    //TODO you will need this to pack fable
+    runDotNet "restore" clientPath 
 )
 
 Target.create "Restore" (fun _ ->
@@ -81,10 +83,9 @@ Target.create "RenameConfig" (fun _ ->
 )
 
 Target.create "Build"  (fun _ ->
-    //DotNetCli.Build(fun p -> {p with WorkingDir = appPath})
-    //DotNet.build (fun p -> p) "" |> ignore
     runDotNet "build" appPath
-    //runTool yarnTool "webpack-cli --config src/Client/webpack.config.js -p" __SOURCE_DIRECTORY__
+    //TODO you will need this for packing up fable
+    runTool yarnTool "webpack-cli --config src/Template.Saturn.Client/webpack.config.js -p" __SOURCE_DIRECTORY__
 )
 
 Target.create "Run" (fun _ -> 
@@ -92,25 +93,25 @@ Target.create "Run" (fun _ ->
     runDotNet "watch run" appPath |> ignore
     }
 
+  //TODO you will need this to pack the client if you use safe stack
   let client = async {
-        runTool yarnTool "webpack-dev-server --config src/Client/webpack.config.js" __SOURCE_DIRECTORY__
+        runTool yarnTool "webpack-dev-server --config src/Template.Saturn.Client/webpack.config.js" __SOURCE_DIRECTORY__
     }
 
   let browser = async {
-    Threading.Thread.Sleep 5000
+    Threading.Thread.Sleep 8000
     openBrowser "http://saturn.local:8085" |> ignore
   }
   let vsCodeSession = Environment.hasEnvironVar "vsCodeSession"
   let safeClientOnly = Environment.hasEnvironVar "safeClientOnly"
 
-  let tasks =
-    [ if not safeClientOnly then yield server
-      yield client
-      if not vsCodeSession then yield browser ]
+  //let tasks =
+  //  [ if not safeClientOnly then yield server
+  //    yield client
+  //    if not vsCodeSession then yield browser ]
 
 
-  //TODO consider running these in order. wait for the server to start up all the way first
-  [ server; browser]
+  [ client; server; browser]
   |> Async.Parallel
   |> Async.RunSynchronously
   |> ignore

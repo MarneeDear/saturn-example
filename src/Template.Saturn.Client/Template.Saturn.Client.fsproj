@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="public\Images\safe_favicon.png" />
+    <Content Include="public\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="paket.references" />
+    <None Include="public\js\app.js" />
+    <None Include="public\js\vendors.js" />
+    <None Include="webpack.config.js" />
+    <Compile Include="..\Shared\Shared.fs" Link="Shared.fs" />
+    <Compile Include="Client.fs" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

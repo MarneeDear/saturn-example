@@ -6,9 +6,11 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Index.html" />
     <None Include="config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="..\Shared\Shared.fs" Link="Shared.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="Helpers.fs" />

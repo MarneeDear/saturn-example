@@ -10,6 +10,7 @@ artifacts/
 *.pubxml.user
 src/Template.Saturn.WebHost/Properties
 config.yaml
-src/Template.Saturn.WebHost/Template.Saturn.WebHost.fsproj.user
+*.user
+*launchSettings.json
 node_modules
 yarn-error.log

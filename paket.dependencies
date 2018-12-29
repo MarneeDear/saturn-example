@@ -26,6 +26,9 @@ nuget Serilog.Sinks.Console
 nuget COM.Core == 0.5.33-dev
 nuget COM.Infrastructure == 0.5.34-dev
 
+nuget Microsoft.ApplicationInsights.AspNetCore ~> 2.2
+nuget WindowsAzure.Storage
+
 nuget FsUnit.xUnit == 3.2.0
 nuget xunit.abstractions
 nuget xunit.runner.visualstudio
@@ -51,12 +54,18 @@ group Client
 
 group Build
   source https://api.nuget.org/v3/index.json
+  framework: netstandard2.0
 
   //nuget FAKE
   nuget FSharp.Core 4.3.4 // https://github.com/fsharp/FAKE/issues/2001
   nuget Fake.Core.Target
   nuget Fake.DotNet.Cli
   nuget Fake.IO.FileSystem
+  nuget Fake.Core.Environment
+  nuget Fake.Core.Trace
+  nuget Fake.IO.Zip
+  github CompositionalIT/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
+
 
   nuget NuGet.CommandLine
   nuget xunit.runner.console

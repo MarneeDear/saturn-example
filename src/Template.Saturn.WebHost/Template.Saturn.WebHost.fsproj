@@ -7,6 +7,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Index.html" />
+    <Content Include="static\bannerlogo2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\blockangleblue2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\uahs-banner2x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="config.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -45,12 +54,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
-    <Content Include="static\app.css" />
-    <Content Include="static\favicon.ico" />
+    <Content Include="static\app.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="static\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="paket.references" />
-    <None Include="static\app.js" />
+    <None Include="static\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

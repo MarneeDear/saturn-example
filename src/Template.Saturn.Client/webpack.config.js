@@ -81,12 +81,7 @@ module.exports = {
                 target: 'http://localhost:' + (process.env.SERVER_PROXY_PORT || "8085"),
                 changeOrigin: true
             }
-            //,
-            //'/socketcluster': {
-            //    target: 'http://localhost:' + (process.env.SERVER_PROXY_PORT || "8085"),
-            //    ws: true
-            //}
-        },        
+        },
         // turn on hot module reloading
         hot: true,
         // more automatic reloading

@@ -19,7 +19,7 @@ open Fake.IO
 
 //C:\development\comit\templates\saturnapp\paket-files\build\CompositionalIT\fshelpers\src\FsHelpers\ArmHelper
 //#load @"paket-files/build/CompositionalIT/fshelpers/src/FsHelpers/ArmHelper/ArmHelper.fs"
-#load @"C:\development\comit\templates\saturnapp\paket-files\build\UACOMTucson\fshelpers\src\FsHelpers\ArmHelper\ArmHelper.fs"
+#load @"paket-files\build\UACOMTucson\fshelpers\src\FsHelpers\ArmHelper\ArmHelper.fs"
 open Cit.Helpers.Arm
 open Cit.Helpers.Arm.Parameters
 open Microsoft.Azure.Management.ResourceManager.Fluent.Core
@@ -191,9 +191,7 @@ Target.create "ArmTemplate" (fun _ ->
 
         Trace.tracefn "Deploying template '%s' to resource group '%s' in subscription '%O'..." armTemplate resourceGroupName subscriptionId
         subscriptionId
-        //|> authenticate Trace.trace { ClientId = clientId; TenantId = tenantId } //or authenticate and pass secret? but find out what happens when you use a tenantid
         |> authenticateDevice {ClientId = clientId; ClientSecret = clientSecret; TenantId = tenantId}
-        //|> Async.RunSynchronously
 
     let deployment =
         let location = Environment.environVarOrDefault "location" Region.USSouthCentral.Name

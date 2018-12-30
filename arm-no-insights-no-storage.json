@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "pricingTier": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "environment": "[toLower(parameters('environment'))]",
+        "prefix": "[concat('safe-', variables('environment'))]",
+        "appServicePlan": "[concat(variables('prefix'), '-web-host')]",
+        "web": "[concat(variables('prefix'), '-web')]",
+        "storage": "[concat('safe', variables('environment'), 'storage')]",
+        "insights": "[concat(variables('prefix'), '-insights')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "[parameters('pricingTier')]"
+            },
+            "name": "[variables('appServicePlan')]",
+            "apiVersion": "2016-09-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "name": "[variables('appserviceplan')]",
+                "perSiteScaling": false,
+                "reserved": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('web')]",
+            "apiVersion": "2016-08-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "public_path",
+                            "value": "./public"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan'))]"
+            ],
+            "resources": [
+                {
+                    "apiVersion": "2016-08-01",
+                    "name": "Microsoft.ApplicationInsights.AzureWebSites",
+                    "type": "siteextensions",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites/', variables('web'))]"
+                    ],
+                    "properties": {}
+                }
+            ]
+        }
+    ],
+    "outputs": {
+        "webAppName": {
+            "type": "string",
+            "value": "[variables('web')]"
+        },
+        "webAppPassword": {
+            "type": "string",
+            "value": "[list(resourceId('Microsoft.Web/sites/config', variables('web'), 'publishingcredentials'), '2014-06-01').properties.publishingPassword]"
+        }
+    }
+}

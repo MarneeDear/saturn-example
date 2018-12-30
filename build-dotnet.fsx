@@ -209,7 +209,7 @@ Target.create "ArmTemplate" (fun _ ->
                     "location", ArmString location
                     "pricingTier", ArmString pricingTier ]
           DeploymentMode = Incremental }
-
+    Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" else "Local"))
     deployment
     |> deployWithProgress (if isTeamCity then unattendedDeploy else developerDeploy)
     |> Seq.iter(function

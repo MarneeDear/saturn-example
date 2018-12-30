@@ -147,9 +147,10 @@ let mutable deploymentOutputs : ArmOutput option = None
 
 let isTeamCity =
     match BuildServer.buildServer with
-    | TeamCity -> false
-    | _ -> true
+    | TeamCity -> true
+    | _ -> false
 
+Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" else "Local"))
 
 //let teamCityDeploy
 
@@ -163,7 +164,6 @@ Target.create "ArmTemplate" (fun _ ->
         | name -> name
 
     Trace.tracefn "RESOURCE GROUP IS %s" resourceGroupName
-
 
     let tenantId = try Environment.environVar "tenantId" |> Guid.Parse with _ -> failwith "Invalid Tenant ID. This should be your Azure Directory ID."    
 

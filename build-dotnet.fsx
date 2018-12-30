@@ -211,7 +211,7 @@ Target.create "ArmTemplate" (fun _ ->
           DeploymentMode = Incremental }
     Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" else "Local"))
     deployment
-    |> deployWithProgress (if isTeamCity then unattendedDeploy else developerDeploy)
+    |> deployWithProgress (if isTeamCity then unattendedDeploy() else developerDeploy())
     |> Seq.iter(function
         | DeploymentInProgress (state, operations) -> Trace.tracefn "State is %s, completed %d operations." state operations
         | DeploymentError (statusCode, message) -> Trace.traceError <| sprintf "DEPLOYMENT ERROR: %s - '%s'" statusCode message

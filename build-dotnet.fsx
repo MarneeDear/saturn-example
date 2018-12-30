@@ -32,6 +32,7 @@ let clientPath = Path.getFullName "./src/Template.Saturn.Client"
 let deployDir = Path.getFullName "./deploy"
 
 let platformTool tool winTool =
+    Trace.trace (sprintf "Tool %s and WinTool %s" tool winTool)
     let tool = if Environment.isUnix then tool else winTool
     match ProcessUtils.tryFindFileOnPath tool with
     | Some t -> t
@@ -49,6 +50,7 @@ let runDotNet cmd workingDir =
 
 let runTool cmd args workingDir =
     let arguments = args |> String.split ' ' |> Arguments.OfArgs
+    Trace.trace (sprintf "Command %s | Command arguments %s" cmd args)
     Command.RawCommand (cmd, arguments)
     |> CreateProcess.fromCommand
     |> CreateProcess.withWorkingDirectory workingDir

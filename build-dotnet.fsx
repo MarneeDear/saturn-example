@@ -36,12 +36,14 @@ let platformTool tool winTool =
     let runTool = if Environment.isUnix then tool else winTool
     match ProcessUtils.tryFindFileOnPath runTool with
     | Some t -> t
-    | _ ->
-        let errorMsg =
-            tool + " was not found in path. " +
-            "Please install it and make sure it's available from your path. " +
-            "See https://safe-stack.github.io/docs/quickstart/#install-pre-requisites for more info"
-        failwith errorMsg
+    | _ ->  match ProcessUtils.tryFindTool "Path" runTool with
+            | Some t -> t
+            | _ ->
+                    let errorMsg =
+                        tool + " was not found in path. " +
+                        "Please install it and make sure it's available from your path. " +
+                        "See https://safe-stack.github.io/docs/quickstart/#install-pre-requisites for more info"
+                    failwith errorMsg
 
 let runDotNet cmd workingDir =
     let result =

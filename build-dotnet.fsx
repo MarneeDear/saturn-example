@@ -230,7 +230,8 @@ type TimeoutWebClient() =
         request.Timeout <- 30 * 60 * 1000
         request
 
-Target.create "AppService" (fun _ ->
+//Used to be AppService
+Target.create "Deploy" (fun _ ->
     let zipFile = "deploy.zip"
     IO.File.Delete zipFile
     Zip.zip deployDir zipFile !!(deployDir + @"\**\**")
@@ -241,7 +242,7 @@ Target.create "AppService" (fun _ ->
     let destinationUri = sprintf "https://%s.scm.azurewebsites.net/api/zipdeploy" appName
     let client = new TimeoutWebClient(Credentials = NetworkCredential("$" + appName, appPassword))
     Trace.tracefn "Uploading %s to %s" zipFile destinationUri
-    //client.UploadData(destinationUri, IO.File.ReadAllBytes zipFile) |> ignore
+    client.UploadData(destinationUri, IO.File.ReadAllBytes zipFile) |> ignore
     )
 
 
@@ -272,10 +273,13 @@ open Fake.Core.TargetOperators
 
 "Clean"
     ==> "InstallClient"
+    ==> "RenameConfig"
+    ==> "Restore"
     ==> "Build"
     ==> "Bundle"
+    ==> "Test"
     ==> "ArmTemplate"
-    ==> "AppService"
+    ==> "Deploy"
 
 "Clean"
   ==> "InstallClient"

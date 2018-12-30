@@ -15,3 +15,4 @@ config.yaml
 node_modules
 yarn-error.log
 deploy*
+*public*

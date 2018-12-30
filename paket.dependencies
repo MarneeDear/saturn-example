@@ -64,7 +64,7 @@ group Build
   nuget Fake.Core.Environment
   nuget Fake.Core.Trace
   nuget Fake.IO.Zip
-  github CompositionalIT/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
+  github UACOMTucson/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
 
 
   nuget NuGet.CommandLine

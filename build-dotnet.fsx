@@ -13,9 +13,13 @@ open System
 open Fake.DotNet
 open Fake.Core
 open Fake.IO
+
+//https://fake.build/apidocs/v5/fake-core-buildservermodule.html#Functions%20and%20values
+//https://fake.build/buildserver.html
+
 //C:\development\comit\templates\saturnapp\paket-files\build\CompositionalIT\fshelpers\src\FsHelpers\ArmHelper
 //#load @"paket-files/build/CompositionalIT/fshelpers/src/FsHelpers/ArmHelper/ArmHelper.fs"
-#load @"C:\development\comit\templates\saturnapp\paket-files\build\CompositionalIT\fshelpers\src\FsHelpers\ArmHelper\ArmHelper.fs"
+#load @"C:\development\comit\templates\saturnapp\paket-files\build\UACOMTucson\fshelpers\src\FsHelpers\ArmHelper\ArmHelper.fs"
 open Cit.Helpers.Arm
 open Cit.Helpers.Arm.Parameters
 open Microsoft.Azure.Management.ResourceManager.Fluent.Core
@@ -82,6 +86,7 @@ Target.create "Restore" (fun _ ->
 )
 
 open Fake.IO.FileSystemOperators
+open Fake.Core
 
 Target.create "RenameConfig" (fun _ ->
     if not (File.exists(appPath @@ "config.yaml"))
@@ -92,7 +97,7 @@ Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
     //TODO you will need this for packing up fable
     //runTool yarnTool "webpack-cli --config src/Template.Saturn.Client/webpack.config.js -p" __SOURCE_DIRECTORY__
-    runTool yarnTool (sprintf "webpack-cli --config %s -p" (appPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
+    runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
 )
 
 Target.create "Run" (fun _ -> 
@@ -136,29 +141,62 @@ type ArmOutput =
       WebAppPassword : ParameterValue<string> }
 let mutable deploymentOutputs : ArmOutput option = None
 
+let isTeamCity =
+    match BuildServer.buildServer with
+    | TeamCity -> false
+    | _ -> true
+
+
+//let teamCityDeploy
+
 Target.create "ArmTemplate" (fun _ ->
     let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
-    let armTemplate = @"arm-template.json"
+    let armTemplate = @"arm-template.json" //TODO consider making this a parameter so can deploy to differnt environments
     //let resourceGroupName = "safe-" + environment
     let resourceGroupName =
         match Environment.environVar "resourceGroupName" with
         | name when String.IsNullOrEmpty(name) -> "experimental-deploy"
         | name -> name
-        //"experimental-build"
+
     Trace.tracefn "RESOURCE GROUP IS %s" resourceGroupName
 
-    let authCtx =
+
+    let tenantId = try Environment.environVar "tenantId" |> Guid.Parse with _ -> failwith "Invalid Tenant ID. This should be your Azure Directory ID."    
+
+    let developerDeploy =
+
+        //let authCtx =
         // You can safely replace these with your own subscription and client IDs hard-coded into this script.
         let subscriptionId = try Environment.environVar "subscriptionId" |> Guid.Parse with _ -> failwith "Invalid Subscription ID. This should be your Azure Subscription ID."
         let clientId = try Environment.environVar "clientId" |> Guid.Parse with _ -> failwith "Invalid Client ID. This should be the Client ID of a Native application registered in Azure with permission to create resources in your subscription."
 
         Trace.tracefn "Deploying template '%s' to resource group '%s' in subscription '%O'..." armTemplate resourceGroupName subscriptionId
         subscriptionId
-        |> authenticateDevice Trace.trace { ClientId = clientId; TenantId = None }
+        |> authenticate Trace.trace { ClientId = clientId; TenantId = Some tenantId } //or authenticate and pass secret? but find out what happens when you use a tenantid
+        //|> authenticateDevice {ClientId = clientId; ClientSecret = clientSecret; TenantId = tenantId}
         |> Async.RunSynchronously
 
+    let unattendedDeploy = 
+        let tenantId = try Environment.environVar "tenantId" |> Guid.Parse with _ -> failwith "Invalid Tenant ID. This should be your Azure Directory ID."
+
+        let clientSecret =
+            match Environment.environVar "clientSecret" with
+            | secret when String.IsNullOrEmpty(secret) -> failwith "Invalid Client ID. This should be your App Registration Secret Key."
+            | secret -> secret
+
+        //let authCtx =
+        // You can safely replace these with your own subscription and client IDs hard-coded into this script.
+        let subscriptionId = try Environment.environVar "subscriptionId" |> Guid.Parse with _ -> failwith "Invalid Subscription ID. This should be your Azure Subscription ID."
+        let clientId = try Environment.environVar "clientId" |> Guid.Parse with _ -> failwith "Invalid Client ID. This should be the Client ID of a Native application registered in Azure with permission to create resources in your subscription."
+
+        Trace.tracefn "Deploying template '%s' to resource group '%s' in subscription '%O'..." armTemplate resourceGroupName subscriptionId
+        subscriptionId
+        //|> authenticate Trace.trace { ClientId = clientId; TenantId = tenantId } //or authenticate and pass secret? but find out what happens when you use a tenantid
+        |> authenticateDevice {ClientId = clientId; ClientSecret = clientSecret; TenantId = tenantId}
+        //|> Async.RunSynchronously
+
     let deployment =
-        let location = Environment.environVarOrDefault "location" Region.EuropeWest.Name
+        let location = Environment.environVarOrDefault "location" Region.USSouthCentral.Name
         let pricingTier = Environment.environVarOrDefault "pricingTier" "F1"
         { DeploymentName = "SATURN-template-deploy"
           ResourceGroup = New(resourceGroupName, Region.Create location)
@@ -171,7 +209,7 @@ Target.create "ArmTemplate" (fun _ ->
           DeploymentMode = Incremental }
 
     deployment
-    |> deployWithProgress authCtx
+    |> deployWithProgress (if isTeamCity then unattendedDeploy else developerDeploy)
     |> Seq.iter(function
         | DeploymentInProgress (state, operations) -> Trace.tracefn "State is %s, completed %d operations." state operations
         | DeploymentError (statusCode, message) -> Trace.traceError <| sprintf "DEPLOYMENT ERROR: %s - '%s'" statusCode message
@@ -201,7 +239,7 @@ Target.create "AppService" (fun _ ->
     let destinationUri = sprintf "https://%s.scm.azurewebsites.net/api/zipdeploy" appName
     let client = new TimeoutWebClient(Credentials = NetworkCredential("$" + appName, appPassword))
     Trace.tracefn "Uploading %s to %s" zipFile destinationUri
-    client.UploadData(destinationUri, IO.File.ReadAllBytes zipFile) |> ignore
+    //client.UploadData(destinationUri, IO.File.ReadAllBytes zipFile) |> ignore
     )
 
 
@@ -210,12 +248,16 @@ Target.create "Test" (fun _ ->
 )
 
 Target.create "Clean" (fun _ ->
-    () //TODO cleanup the build folder
+    () //TODO cleanup the deploy folder
 )
 
 Target.create "Publish" (fun _ ->
     DotNet.publish (fun p -> { p with OutputPath = Some "../../published"} ) appPath
 )
+
+//Target.create "DeployToAzure" (fun _ ->
+//    Target.runOrDefaultWithArguments "AppService"
+//)
 
 open Fake.Core.TargetOperators
 

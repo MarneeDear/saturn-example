@@ -33,8 +33,8 @@ let deployDir = Path.getFullName "./deploy"
 
 let platformTool tool winTool =
     Trace.trace (sprintf "Tool %s and WinTool %s" tool winTool)
-    let tool = if Environment.isUnix then tool else winTool
-    match ProcessUtils.tryFindFileOnPath tool with
+    let runTool = if Environment.isUnix then tool else winTool
+    match ProcessUtils.tryFindFileOnPath runTool with
     | Some t -> t
     | _ ->
         let errorMsg =
@@ -68,6 +68,9 @@ let openBrowser url =
 
 let nodeTool = platformTool "node" "node.exe"
 let yarnTool = platformTool "yarn" "yarn.cmd"
+
+Trace.trace (sprintf "Node Tool %s" nodeTool)
+Trace.trace (sprintf "Yarn tool %s" yarnTool)
 
 Target.create "InstallDotNetCore" (fun _ ->
     DotNet.install (fun p -> {p with Version = DotNet.CliVersion.GlobalJson }) |> ignore

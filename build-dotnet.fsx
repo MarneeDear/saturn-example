@@ -167,7 +167,7 @@ Target.create "ArmTemplate" (fun _ ->
 
     let tenantId = try Environment.environVar "tenantId" |> Guid.Parse with _ -> failwith "Invalid Tenant ID. This should be your Azure Directory ID."    
 
-    let developerDeploy =
+    let developerDeploy () =
 
         //let authCtx =
         // You can safely replace these with your own subscription and client IDs hard-coded into this script.
@@ -180,7 +180,7 @@ Target.create "ArmTemplate" (fun _ ->
         //|> authenticateDevice {ClientId = clientId; ClientSecret = clientSecret; TenantId = tenantId}
         |> Async.RunSynchronously
 
-    let unattendedDeploy = 
+    let unattendedDeploy () = 
         let tenantId = try Environment.environVar "tenantId" |> Guid.Parse with _ -> failwith "Invalid Tenant ID. This should be your Azure Directory ID."
 
         let clientSecret =

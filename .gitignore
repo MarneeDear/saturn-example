@@ -16,3 +16,4 @@ node_modules
 yarn-error.log
 deploy*
 *public*
+src/Template.Saturn.WebHost/config-test.yaml

@@ -9,7 +9,6 @@
 
 
 open System
-//open Fake
 open Fake.DotNet
 open Fake.Core
 open Fake.IO
@@ -30,6 +29,12 @@ let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fa
 //let serverPath = Path.getFullName "./src/Server"
 let clientPath = Path.getFullName "./src/Template.Saturn.Client"
 let deployDir = Path.getFullName "./deploy"
+
+let isTeamCity =
+    match BuildServer.buildServer with
+    | TeamCity -> true
+    | _ -> false
+
 
 let platformTool tool winTool =
     Trace.trace (sprintf "Tool %s and WinTool %s" tool winTool)
@@ -90,11 +95,28 @@ Target.create "Restore" (fun _ ->
 )
 
 open Fake.IO.FileSystemOperators
-open Fake.Core
+
+Target.create "UpdateConfiguration" (fun _ ->
+    //Common.setAssemblyInfo productName version  TODO make this work with FAKE 5
+    match BuildServer.buildServer with
+    | TeamCity ->
+                    File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL.Url")) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "EDSUSERNAME" (Environment.environVar "EDS.UserName") ) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
+    | _ ->
+             File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
+             File.applyReplace (String.replace "CONNECTIONSTRING" "TEST" ) (appPath @@ "config-test.yaml")
+
+)
+
 
 Target.create "RenameConfig" (fun _ ->
     if not (File.exists(appPath @@ "config.yaml"))
-        then Fake.IO.Shell.rename (appPath @@ "config.yaml") (appPath @@ "config_design.yaml") |> ignore
+        then Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
+    Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
 )
 
 Target.create "Build"  (fun _ ->
@@ -120,8 +142,8 @@ Target.create "Run" (fun _ ->
     Threading.Thread.Sleep 8000
     openBrowser "http://saturn.local:8085" |> ignore
   }
-  let vsCodeSession = Environment.hasEnvironVar "vsCodeSession"
-  let safeClientOnly = Environment.hasEnvironVar "safeClientOnly"
+  //let vsCodeSession = Environment.hasEnvironVar "vsCodeSession"
+  //let safeClientOnly = Environment.hasEnvironVar "safeClientOnly"
 
   //let tasks =
   //  [ if not safeClientOnly then yield server
@@ -145,15 +167,10 @@ type ArmOutput =
       WebAppPassword : ParameterValue<string> }
 let mutable deploymentOutputs : ArmOutput option = None
 
-let isTeamCity =
-    match BuildServer.buildServer with
-    | TeamCity -> true
-    | _ -> false
-
 Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" else "Local"))
 
 //let teamCityDeploy
-
+//https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#create-an-azure-active-directory-application
 Target.create "ArmTemplate" (fun _ ->
     let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
     let armTemplate = @"arm-template.json" //TODO consider making this a parameter so can deploy to differnt environments
@@ -299,6 +316,11 @@ open Fake.Core.TargetOperators
   ==> "Build"
   ==> "Test"
   ==> "Publish"
+
+"Clean"
+  ==> "RenameConfig"
+  ==> "UpdateConfiguration"
+
 
 Target.runOrDefaultWithArguments "Test"
 

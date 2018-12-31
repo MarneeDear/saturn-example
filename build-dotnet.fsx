@@ -102,7 +102,7 @@ Target.create "UpdateConfiguration" (fun _ ->
     | TeamCity ->
                     File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL.Url")) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL")) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "EDSUSERNAME" (Environment.environVar "EDS.UserName") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
@@ -115,7 +115,7 @@ Target.create "UpdateConfiguration" (fun _ ->
 
 Target.create "CopyConfig" (fun _ ->
     if not (File.exists(appPath @@ "config.yaml"))
-        then Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
+        then Fake.IO.Shell.copyFile (appPath @@ "config.yaml") ("config_design.yaml") |> ignore
     Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
 )
 

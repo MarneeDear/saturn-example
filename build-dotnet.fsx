@@ -100,6 +100,7 @@ Target.create "UpdateConfiguration" (fun _ ->
     //Common.setAssemblyInfo productName version  TODO make this work with FAKE 5
     match BuildServer.buildServer with
     | TeamCity ->
+                    Trace.traceEnvironmentVariables |> ignore
                     File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL")) (appPath @@ "config.yaml")
@@ -107,8 +108,9 @@ Target.create "UpdateConfiguration" (fun _ ->
                     File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
     | _ ->
-             File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
-             File.applyReplace (String.replace "CONNECTIONSTRING" "TEST" ) (appPath @@ "config-test.yaml")
+                Trace.traceEnvironmentVariables |> ignore
+                File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
+                File.applyReplace (String.replace "CONNECTIONSTRING" "TEST" ) (appPath @@ "config-test.yaml")
 
 )
 

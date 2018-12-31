@@ -113,7 +113,7 @@ Target.create "UpdateConfiguration" (fun _ ->
 )
 
 
-Target.create "RenameConfig" (fun _ ->
+Target.create "CopyConfig" (fun _ ->
     if not (File.exists(appPath @@ "config.yaml"))
         then Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
     Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
@@ -285,12 +285,13 @@ open Fake.Core.TargetOperators
 "Clean" 
   ==> "InstallDotNetCore"
   ==> "InstallClient"
-  ==> "RenameConfig"
+  ==> "CopyConfig"
   ==> "Build"
 
 "Clean"
     ==> "InstallClient"
-    ==> "RenameConfig"
+    ==> "CopyConfig"
+    ==> "UpdateConfig"
     ==> "Restore"
     ==> "Build"
     ==> "Bundle"
@@ -306,19 +307,19 @@ open Fake.Core.TargetOperators
 "Clean"
   ==> "InstallDotNetCore"
   ==> "InstallClient"
-  ==> "RenameConfig"
+  ==> "CopyConfig"
   ==> "Build"
   ==> "Test"
 
 "Clean"
   ==> "InstallDotNetCore"
-  ==> "RenameConfig"
+  ==> "CopyConfig"
   ==> "Build"
   ==> "Test"
   ==> "Publish"
 
 "Clean"
-  ==> "RenameConfig"
+  ==> "CopyConfig"
   ==> "UpdateConfiguration"
 
 

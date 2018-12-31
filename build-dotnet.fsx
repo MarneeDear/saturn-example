@@ -176,7 +176,7 @@ Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" els
 //https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#create-an-azure-active-directory-application
 Target.create "ArmTemplate" (fun _ ->
     let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
-    let armTemplate = @"arm-template.json" //TODO consider making this a parameter so can deploy to differnt environments
+    let armTemplate = @"arm-template-with-insights-storage.json" //TODO consider making this a parameter so can deploy to differnt environments
     let resourceGroupName =
         match Environment.environVar "resourceGroupName" with
         | name when String.IsNullOrEmpty(name) -> "experimental-deploy"
@@ -297,7 +297,7 @@ open Fake.Core.TargetOperators
     ==> "UpdateConfiguration"
     ==> "Restore"
     ==> "Build"
-    ==> "Bundle"
+    //==> "Bundle"
     ==> "Test"
     ==> "ArmTemplate"
     ==> "Deploy"

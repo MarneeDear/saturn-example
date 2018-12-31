@@ -167,6 +167,7 @@ Target.create "Bundle" (fun _ ->
 type ArmOutput =
     { WebAppName : ParameterValue<string>
       WebAppPassword : ParameterValue<string> }
+
 let mutable deploymentOutputs : ArmOutput option = None
 
 Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" else "Local"))
@@ -176,7 +177,6 @@ Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" els
 Target.create "ArmTemplate" (fun _ ->
     let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
     let armTemplate = @"arm-template.json" //TODO consider making this a parameter so can deploy to differnt environments
-    //let resourceGroupName = "safe-" + environment
     let resourceGroupName =
         match Environment.environVar "resourceGroupName" with
         | name when String.IsNullOrEmpty(name) -> "experimental-deploy"

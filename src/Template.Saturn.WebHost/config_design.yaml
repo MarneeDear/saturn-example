@@ -1,3 +1,6 @@
+Environment: ENVIRONMENT
+Azure:
+    BlobStorageConnectionString: BLOBSTORAGECONNECTIONSTRING
 DB:
   ConnectionString: CONNECTIONSTRING
 EDS:
@@ -8,3 +11,6 @@ WebAuth:
   Url: WEBAUTHURL
 General:
   ConfigSettingExample: GENERALCONFIGSETTING
+Logging:
+    Retention: 7
+    Sink: Blob

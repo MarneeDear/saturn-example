@@ -17,5 +17,6 @@ COM.Infrastructure
 
 Serilog.AspNetCore
 Serilog.Sinks.Console
+Serilog.Sinks.AzureBlobStorage
 
 Chessie

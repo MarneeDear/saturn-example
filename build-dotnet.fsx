@@ -101,6 +101,8 @@ Target.create "UpdateConfiguration" (fun _ ->
     match BuildServer.buildServer with
     | TeamCity ->
                     Trace.traceEnvironmentVariables |> ignore
+                    File.applyReplace (String.replace "ENVIRONMENT" (Environment.environVar "Environment")) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "BLOBSTORAGECONNECTIONSTRING" (Environment.environVar "Azure.BlobStorageConnectionString")) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL")) (appPath @@ "config.yaml")
@@ -289,6 +291,7 @@ open Fake.Core.TargetOperators
   ==> "InstallClient"
   ==> "CopyConfig"
   ==> "UpdateConfiguration"
+  ==> "Restore"
   ==> "Build"
 
 "Clean"
@@ -312,6 +315,7 @@ open Fake.Core.TargetOperators
   ==> "InstallClient"
   ==> "CopyConfig"
   ==> "UpdateConfiguration"
+  ==> "Restore"
   ==> "Build"
   ==> "Test"
 
@@ -319,6 +323,7 @@ open Fake.Core.TargetOperators
   ==> "InstallDotNetCore"
   ==> "CopyConfig"
   ==> "UpdateConfiguration"
+  ==> "Restore"
   ==> "Build"
   ==> "Test"
   ==> "Publish"

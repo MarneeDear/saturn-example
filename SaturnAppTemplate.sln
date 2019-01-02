@@ -11,7 +11,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A712380B-85A8-40F0-9623-B02C0E086CA2}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		arm-no-insights-no-storage.json = arm-no-insights-no-storage.json
+		arm-template-with-insights-storage.json = arm-template-with-insights-storage.json
 		arm-template.json = arm-template.json
 		b-art.txt = b-art.txt
 		build-art.txt = build-art.txt

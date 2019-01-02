@@ -7,4 +7,6 @@ type Config = {
     edsUserName : string
     edsPassword : string
     configSettingExample : string
+    environment: string
+    blobStorageConnectionString: string
 }

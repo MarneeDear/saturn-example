@@ -22,12 +22,13 @@ nuget FSharp.Configuration
 //https://github.com/serilog/serilog-aspnetcore
 nuget Serilog.AspNetCore
 nuget Serilog.Sinks.Console
+nuget Serilog.Sinks.AzureBlobStorage == 1.0.0.1
+nuget WindowsAzure.Storage == 9.0.0
 
 nuget COM.Core == 0.5.33-dev
 nuget COM.Infrastructure == 0.5.34-dev
 
 nuget Microsoft.ApplicationInsights.AspNetCore ~> 2.2
-nuget WindowsAzure.Storage
 
 nuget FsUnit.xUnit == 3.2.0
 nuget xunit.abstractions

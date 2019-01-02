@@ -17,10 +17,10 @@ open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Authentication.Cookies
 open FSharp.Configuration
 open Serilog
-open NLog.Common
-open Serilog
+open Serilog.Sinks
 open Microsoft.Extensions.Configuration
 open Serilog.Events
+open Microsoft.WindowsAzure.Storage
 
 //type ConfigSettings = AppSettings<"web.config">
 
@@ -37,19 +37,34 @@ let endpointPipe = pipeline {
 
 let getConfig =
     {
-      connectionString = "DataSource=database.sqlite"
+      connectionString = string config.DB.ConnectionString
       edsUrl = string config.EDS.Url
       webAuthUrl = string config.WebAuth.Url
       edsUserName = config.EDS.UserName
       edsPassword = config.EDS.Password
       configSettingExample = config.General.ConfigSettingExample
+      environment = config.Environment
+      blobStorageConnectionString = config.Azure.BlobStorageConnectionString
     }
+
+//https://github.com/chriswill/serilog-sinks-azureblobstorage
 
 let loggingConfig = new LoggerConfiguration()
 loggingConfig.MinimumLevel.Debug() |> ignore
 loggingConfig.MinimumLevel.Override("Microsoft", LogEventLevel.Information) |> ignore
 loggingConfig.Enrich.FromLogContext() |> ignore
-loggingConfig.WriteTo.Console() |> ignore
+if config.Environment = "Local" then
+    loggingConfig.WriteTo.Console() |> ignore
+else
+    loggingConfig.WriteTo.AzureBlobStorage(config.Azure.BlobStorageConnectionString) |> ignore
+    //CloudStorageAccount cloudStorage = new CloudStorageAccount()
+    //loggingConfig.WriteTo.AzureBlobStorage("", Serilog.Events.LogEventLevel.Information, null, null, null, true, TimeSpan.FromSeconds(15), 10, false, null) |> ignore
+    //loggingConfig.WriteTo.AzureBlobStorage("connectionstringtodo",
+    //    LogEventLevel.Information,
+    //    "experimental-logs",
+    //    "experimental.log",
+    //    true, TimeSpan.FromSeconds(15), 10
+    //    ) |> ignore
 
 let app = application {
     pipe_through endpointPipe

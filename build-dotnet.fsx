@@ -33,7 +33,7 @@ let deployDir = Path.getFullName "./deploy"
 let isTeamCity =
     match BuildServer.buildServer with
     | TeamCity -> true
-    | _ -> false
+    | _ -> true
 
 
 let platformTool tool winTool =
@@ -126,7 +126,6 @@ Target.create "CopyConfig" (fun _ ->
 Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
     //TODO you will need this for packing up fable
-    //runTool yarnTool "webpack-cli --config src/Template.Saturn.Client/webpack.config.js -p" __SOURCE_DIRECTORY__
     runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
 )
 
@@ -137,7 +136,6 @@ Target.create "Run" (fun _ ->
 
   //TODO you will need this to pack the client if you use safe stack
   let client = async {
-        //runTool yarnTool "webpack-dev-server --config src/Template.Saturn.Client/webpack.config.js" __SOURCE_DIRECTORY__
         runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
 
     }
@@ -178,7 +176,7 @@ Trace.trace (sprintf "The build server is %s" (if isTeamCity then "TeamCity" els
 //https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#create-an-azure-active-directory-application
 Target.create "ArmTemplate" (fun _ ->
     let environment = Environment.environVarOrDefault "environment" (Guid.NewGuid().ToString().ToLower().Split '-' |> Array.head)
-    let armTemplate = @"arm-template-with-insights-storage.json" //TODO consider making this a parameter so can deploy to differnt environments
+    let armTemplate = @"arm-template.json" //TODO consider making this a parameter so can deploy to differnt environments
     let resourceGroupName =
         match Environment.environVar "resourceGroupName" with
         | name when String.IsNullOrEmpty(name) -> "experimental-deploy"
@@ -253,6 +251,10 @@ type TimeoutWebClient() =
 
 //Used to be AppService
 Target.create "Deploy" (fun _ ->
+    //create the deploy folder if it does not exist
+    if not (Shell.testDir deployDir) then
+        Shell.mkdir deployDir
+
     let zipFile = "deploy.zip"
     IO.File.Delete zipFile
     Zip.zip deployDir zipFile !!(deployDir + @"\**\**")

@@ -302,7 +302,7 @@ open Fake.Core.TargetOperators
     ==> "UpdateConfiguration"
     ==> "Restore"
     ==> "Build"
-    //==> "Bundle"
+    ==> "Bundle"
     ==> "Test"
     ==> "ArmTemplate"
     ==> "Deploy"

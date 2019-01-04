@@ -53,10 +53,15 @@ let loggingConfig = new LoggerConfiguration()
 loggingConfig.MinimumLevel.Debug() |> ignore
 loggingConfig.MinimumLevel.Override("Microsoft", LogEventLevel.Information) |> ignore
 loggingConfig.Enrich.FromLogContext() |> ignore
-if config.Environment = "Local" then
-    loggingConfig.WriteTo.Console() |> ignore
-else
-    loggingConfig.WriteTo.AzureBlobStorage(config.Azure.BlobStorageConnectionString) |> ignore
+match config.Logging.Sink with
+| "Console" -> loggingConfig.WriteTo.Console() |> ignore
+| "AzureBlobStorage" -> loggingConfig.WriteTo.AzureBlobStorage(config.Azure.BlobStorageConnectionString) |> ignore
+| _ -> failwith (sprintf "[ERROR] Unknown logging sink. You must configure a known logging sink. Sink configured is [%s]" config.Logging.Sink)
+
+//if config.Logging.Sink = "Local" then
+//    loggingConfig.WriteTo.Console() |> ignore
+//else
+//    loggingConfig.WriteTo.AzureBlobStorage(config.Azure.BlobStorageConnectionString) |> ignore
     //CloudStorageAccount cloudStorage = new CloudStorageAccount()
     //loggingConfig.WriteTo.AzureBlobStorage("", Serilog.Events.LogEventLevel.Information, null, null, null, true, TimeSpan.FromSeconds(15), 10, false, null) |> ignore
     //loggingConfig.WriteTo.AzureBlobStorage("connectionstringtodo",

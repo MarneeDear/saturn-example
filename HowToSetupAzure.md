@@ -2,6 +2,8 @@
 
 ## Setup a WebAPI App Registration in Azure AD
 
+This will be used by unattended processes that deploy the application to Azure, like TeamCity. You'll want to name the App Registration accordingly.
+
 ### Get the App Registration Key
 #### Client Id
 #### Client Secret
@@ -13,6 +15,8 @@
 ## Give Contributor access to the App Registration
 ## Setup Azure Blob Storage for logging
 ## DO NOT STORE SECRETS UNSECURED. YOU DO NOT NEED ANY KEYS OR CONNECTION STRING ON YOUR
+
+## Setup a Native App Registration in Azure AD
 
 
 

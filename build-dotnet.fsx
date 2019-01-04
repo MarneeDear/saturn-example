@@ -109,6 +109,8 @@ Target.create "UpdateConfiguration" (fun _ ->
                     File.applyReplace (String.replace "EDSUSERNAME" (Environment.environVar "EDS.UserName") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
                     File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "RETENTION" (Environment.environVar "Logging.Retention") ) (appPath @@ "config.yaml")
+                    File.applyReplace (String.replace "SINK" (Environment.environVar "Logging.Sink") ) (appPath @@ "config.yaml")
     | _ ->
                 Trace.traceEnvironmentVariables |> ignore
                 File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
@@ -137,7 +139,6 @@ Target.create "Run" (fun _ ->
   //TODO you will need this to pack the client if you use safe stack
   let client = async {
         runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
-
     }
 
   let browser = async {

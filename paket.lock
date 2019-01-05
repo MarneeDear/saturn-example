@@ -101,5 +101,5 @@ GROUP Build
 NUGET
   remote: https://api.nuget.org/v3/index.json
     FAKE (5.8.4)
-    NuGet.CommandLine (4.7.1)
+    NuGet.CommandLine (4.9.2)
     xunit.runner.console (2.4.1)

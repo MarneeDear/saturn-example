@@ -7,16 +7,19 @@
     <UserSecretsId>1e08373c-b8a3-4788-8770-e059529be4b5</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Authentication\Cas.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Templates\AuthApp.fs" />
     <Compile Include="Templates\App.fs" />
+    <Compile Include="Templates\AccessDenied.fs" />
     <Compile Include="Templates\Dashboard.fs" />
     <Compile Include="Templates\Logout.fs" />
     <Compile Include="Templates\Login.fs" />
     <Compile Include="Templates\Index.fs" />
     <Compile Include="Templates\NotFound.fs" />
     <Compile Include="Templates\InternalError.fs" />
+    <Compile Include="Access\Authorization.fs" />
+    <Compile Include="Access\Helpers.fs" />
+    <Compile Include="Access\Cas.fs" />
     <Compile Include="Books\BooksModel.fs" />
     <Compile Include="Books\BooksViews.fs" />
     <Compile Include="Books\BooksController.fs" />

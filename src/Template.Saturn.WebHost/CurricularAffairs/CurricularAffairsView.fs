@@ -21,9 +21,11 @@ module Views =
             ]
             div [_class "container"] [
                 ul [] [
-                    li [] [ rawText "Id:"; rawText (string course.id) ]
-                    li [] [ rawText "GradYear:"; rawText (string (getGradYear course.gradYear)) ]
-                    li [] [ rawText "Course:"; rawText course.name]
+                    li [] [ encodedText "Id:"; encodedText (string course.id) ]
+                    li [] [ encodedText "GradYear:"; encodedText (string (getGradYear course.gradYear)) ]
+                    li [] [ encodedText "Course:"; encodedText course.name]
+                    li [] [ a [_class "button is-text is-delete"; attr "data-href" (Links.withId ctx course.id ) ] [rawText "Delete"]]
+
                 ]
             ]
         ]

@@ -17,7 +17,7 @@
         "prefix": "[concat('safe-', variables('environment'))]",
         "appServicePlan": "[concat(variables('prefix'), '-web-host')]",
         "web": "[concat(variables('prefix'), '-web')]",
-        "storage": "[concat('safe', variables('environment'), 'storage')]",
+        "storage": "['comexperimentalstorage']",
         "insights": "[concat(variables('prefix'), '-insights')]"
     },
     "resources": [
@@ -42,7 +42,7 @@
                 "name": "Standard_LRS",
                 "tier": "Standard"
             },
-            "kind": "Storage",
+            "kind": "StorageV2",
             "name": "[variables('storage')]",
             "apiVersion": "2017-10-01",
             "location": "[parameters('location')]",

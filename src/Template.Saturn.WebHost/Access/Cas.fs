@@ -1,67 +1,48 @@
-﻿module CAS
+module CAS
 
 open Saturn
+open Giraffe
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Authentication.Cookies
 open Microsoft.AspNetCore.Authentication
 open AspNetCore.Security.CAS
-open System.Security.Claims
-open System.Threading.Tasks
-open COM.Core
-open COM.Infrastructure
-open COM.Core.Models
-
+open Microsoft.AspNetCore.Http
+open Microsoft.Extensions.Configuration
 
 let private addCookie state (c : AuthenticationBuilder) = if not state.CookiesAlreadyAdded then c.AddCookie() |> ignore
 
 type ApplicationBuilder with
-    //Enables CAS authentication
-    //Uses https://github.com/IUCrimson/AspNet.Security.CAS
     [<CustomOperation("use_cas")>]
-    member __.UseCasAuthentication(state: ApplicationState, casServerUrlBase, edsServerUrl, edsUserName, edsPassword) =
-      let middleware (app : IApplicationBuilder) =
-        app.UseAuthentication() 
-        
-      let edsService =
-        new DirectoryServices.EdsClient(edsServerUrl, edsUserName,
-            edsPassword) :> Interfaces.IEdsClient
+    member __.UseCasAuthentication(state: ApplicationState, casCookies : IConfiguration -> System.Action<CookieAuthenticationOptions>, casConfig : IConfiguration -> System.Action<CasOptions>) = //(options :  CasOptions) ) =
+        let middleware (app : IApplicationBuilder) =
+            app.UseAuthentication()
 
-      //TODO: remove and replace with your roles, policies, claims, or resource assignment handlers
-      //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-2.1
-      let getClaims (attributes: UserAttribute list) =
-        let identity = new ClaimsIdentity()
-        for attr in attributes do 
-          for value in attr.Values do
-            if attr.Name = "isMemberOf" then
-              identity.AddClaim(new Claim(ClaimTypes.Role, value))
-            else
-              identity.AddClaim(new Claim(attr.Name, value))              
-        identity.AddClaim(new Claim(ClaimTypes.Role, "admin")) //TODO: you don't want this in production. See TODO above
-        identity
+        let mutable casOptions = None
+        let mutable cookies = None
 
-      let cookieEvents = new CookieAuthenticationEvents()
-      cookieEvents.OnSigningIn <- (fun ctx -> 
-            let userInfo = edsService.GetUserInfo(ctx.Principal.Identity.Name)
-            ctx.Principal.AddIdentity(getClaims(userInfo.Attributes))
-            Task.CompletedTask)
+        let handler (nxt : HttpFunc) (ctx : Microsoft.AspNetCore.Http.HttpContext) : HttpFuncResult =
+            let ic = ctx.GetService<IConfiguration>()
+            casOptions <- Some (casConfig ic)
+            cookies <- Some (casCookies ic)
+            nxt ctx
 
-      let service (s : IServiceCollection) =
-        let c = s.AddAuthentication(fun cfg ->
-          cfg.DefaultScheme <- CookieAuthenticationDefaults.AuthenticationScheme
-          cfg.DefaultChallengeScheme <- "CAS"
-          )
-        c.AddCookie(fun o -> o.Events <- cookieEvents) |> ignore
-        //addCookie state c
-        c.AddCAS(fun o -> 
-            o.CasServerUrlBase <- casServerUrlBase
-            o.SignInScheme <- CookieAuthenticationDefaults.AuthenticationScheme
-            )
-        |> ignore
-        s
+        let service (s : IServiceCollection) =
+            let c = s.AddAuthentication(fun cfg ->
+                cfg.DefaultScheme <- CookieAuthenticationDefaults.AuthenticationScheme
+                cfg.DefaultChallengeScheme <- "CAS"
+                )
+            match casOptions with
+            | Some o    -> c.AddCAS(o) |> ignore
+            | None      -> ()
 
-      { state with
-          ServicesConfig = service::state.ServicesConfig
-          AppConfigs = middleware::state.AppConfigs
-          CookiesAlreadyAdded = true
-      }
+            match cookies with
+            | Some o    -> c.AddCookie(o) |> ignore
+            | None      -> ()
+            s
+
+        { state with
+            ServicesConfig = service::state.ServicesConfig
+            AppConfigs = middleware::state.AppConfigs
+            CookiesAlreadyAdded = true
+        }

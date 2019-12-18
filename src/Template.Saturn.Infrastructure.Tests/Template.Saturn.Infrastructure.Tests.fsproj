@@ -6,7 +6,6 @@
   <ItemGroup>
     <Compile Include="TemplateTests.fs" />
     <Compile Include="AssemblyInfo.fs" />
-    <None Include="packages.config" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

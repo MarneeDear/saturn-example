@@ -3,7 +3,6 @@ module Router
 open Saturn
 open Giraffe.Core
 open Giraffe.ResponseWriters
-open Books
 open Login
 open Logout
 open Dashboard
@@ -41,10 +40,10 @@ let loggedInView = router {
     pipe_through protectFromForgery
     pipe_through login
 
-    forward "/books" Books.Controller.resource 
-    forward "/books/add" Books.Controller.resource
-    forwardf "/books/%d" (fun (x : int64) -> Books.Controller.resource)  
-    forwardf "/books/%d/edit" (fun (x : int64) -> Books.Controller.resource)  
+    //forward "/books" Books.Controller.resource 
+    //forward "/books/add" Books.Controller.resource
+    //forwardf "/books/%d" (fun (x : int64) -> Books.Controller.resource)  
+    //forwardf "/books/%d/edit" (fun (x : int64) -> Books.Controller.resource)  
     forward "/dashboard" (fun next ctx -> htmlView (Dashboard.layout ctx) next ctx)
     forward "/CurricularAffairs" CurricularAffairs.Controller.resource
 }

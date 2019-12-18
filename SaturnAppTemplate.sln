@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2364C03F-7BCF-4E5A-9720-95991959E582}"
 EndProject
@@ -16,8 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A712380B
 		b-art.txt = b-art.txt
 		build-art.txt = build-art.txt
 		build-dotnet.cmd = build-dotnet.cmd
-		build-dotnet.fsx = build-dotnet.fsx
 		build-dotnet.sh = build-dotnet.sh
+		fake.fsx = fake.fsx
 		fsc.props = fsc.props
 		global.json = global.json
 		HowToSetupAzure.md = HowToSetupAzure.md
@@ -33,8 +33,6 @@ EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Template.Saturn.Infrastructure.Tests", "src\Template.Saturn.Infrastructure.Tests\Template.Saturn.Infrastructure.Tests.fsproj", "{89AB0D7A-608D-4E6E-9315-F673C14D03A0}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Template.Saturn.WebHost", "src\Template.Saturn.WebHost\Template.Saturn.WebHost.fsproj", "{79932607-360B-4482-A0C6-ABAA2AC014DE}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Template.Saturn.Client", "src\Template.Saturn.Client\Template.Saturn.Client.fsproj", "{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,18 +104,6 @@ Global
 		{79932607-360B-4482-A0C6-ABAA2AC014DE}.Release|x64.Build.0 = Release|Any CPU
 		{79932607-360B-4482-A0C6-ABAA2AC014DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{79932607-360B-4482-A0C6-ABAA2AC014DE}.Release|x86.Build.0 = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|x64.Build.0 = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Debug|x86.Build.0 = Debug|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|x64.ActiveCfg = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|x64.Build.0 = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|x86.ActiveCfg = Release|Any CPU
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,7 +114,6 @@ Global
 		{1C7DF573-EB59-4898-884C-47B7092773E8} = {91028100-D8E3-447A-B507-D9279940731C}
 		{89AB0D7A-608D-4E6E-9315-F673C14D03A0} = {91028100-D8E3-447A-B507-D9279940731C}
 		{79932607-360B-4482-A0C6-ABAA2AC014DE} = {2364C03F-7BCF-4E5A-9720-95991959E582}
-		{D900FE4B-A1E8-4D26-9693-BEE4193EBD99} = {2364C03F-7BCF-4E5A-9720-95991959E582}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C5AE95E-71A9-4D06-A4E6-D49FDCCD27E1}

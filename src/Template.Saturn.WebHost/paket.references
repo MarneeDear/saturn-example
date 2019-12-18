@@ -3,9 +3,6 @@ FSharp.Data
 FSharp.Configuration
 Saturn
 
-Dapper
-Microsoft.Data.Sqlite
-
 FsToolkit.ErrorHandling
 
 AspNetCore.Security.CAS

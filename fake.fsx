@@ -1,6 +1,6 @@
 //#r @"packages/build/FAKE/tools/FakeLib.dll"
 #r "paket: groupref build //"
-#load "./.fake/build-dotnet.fsx/intellisense.fsx"
+#load "./.fake/fake.fsx/intellisense.fsx"
 
 #if !FAKE
 #r "netstandard"

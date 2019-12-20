@@ -7,8 +7,8 @@ source https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
 // $ .paket/paket.exe config add-credentials https://teamcity.med.arizona.edu/httpAuth/app/nuget/v1/FeedService.svc
 
 
-nuget FSharp.Core == 4.5.0
-nuget FSharp.Data == 3.0
+nuget FSharp.Core
+nuget FSharp.Data
 nuget Saturn
 nuget Giraffe 
 //https://github.com/UACOMTucson/AspNet.Security.CAS
@@ -17,24 +17,20 @@ nuget AspNetCore.Security.CAS
 nuget FsToolkit.ErrorHandling
 nuget Microsoft.AspNetCore.Authentication.JwtBearer == 2.2.0
 
-nuget FSharp.Configuration
 //https://github.com/serilog/serilog-aspnetcore
 nuget Serilog.AspNetCore
 nuget Serilog.Sinks.Console
 nuget Serilog.Sinks.AzureBlobStorage == 1.0.0.1
 nuget WindowsAzure.Storage == 9.0.0
 
-nuget COM.Core == 0.5.33-dev
-nuget COM.Infrastructure == 0.5.34-dev
+nuget COM.Core == 1.0.0-25
+nuget COM.Infrastructure == 1.0.0-25
 
 nuget Microsoft.ApplicationInsights.AspNetCore ~> 2.2
 
 nuget FsUnit.xUnit == 3.2.0
 nuget xunit.abstractions
 nuget xunit.runner.visualstudio
-
-//This is to support COM.Core and COM.Infrastructure dependency. Do not use in the project.
-nuget Chessie
 
 clitool dotnet-saturn
 
@@ -52,7 +48,5 @@ group Build
   nuget Fake.IO.Zip
   github UACOMTucson/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
 
-
   nuget NuGet.CommandLine
   nuget xunit.runner.console
-

@@ -60,48 +60,11 @@ let openBrowser url =
 
 Trace.trace (File.readAsString "build-art.txt")
 
-//Target.create "InstallDotNetCore" (fun _ ->
-//    DotNet.install (fun p -> {p with Version = DotNet.CliVersion.GlobalJson }) |> ignore
-//)
-
-//Target.create "InstallClient" (fun _ ->
-//    runDotNet "restore" clientPath 
-//)
-
 Target.create "Restore" (fun _ ->
     DotNet.restore (fun p -> p) appPath |> ignore
 )
 
 open Fake.IO.FileSystemOperators
-
-Target.create "UpdateConfiguration" (fun _ ->
-    //Common.setAssemblyInfo productName version  TODO make this work with FAKE 5
-    match BuildServer.buildServer with
-    | TeamCity ->
-                    Trace.traceEnvironmentVariables |> ignore
-                    File.applyReplace (String.replace "ENVIRONMENT" (Environment.environVar "Environment")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "BLOBSTORAGECONNECTIONSTRING" (Environment.environVar "Azure.BlobStorageConnectionString")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSUSERNAME" (Environment.environVar "EDS.UserName") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "RETENTION" (Environment.environVar "Logging.Retention") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "SINK" (Environment.environVar "Logging.Sink") ) (appPath @@ "config.yaml")
-    | _ ->
-                Trace.traceEnvironmentVariables |> ignore
-                File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
-                File.applyReplace (String.replace "CONNECTIONSTRING" "TEST" ) (appPath @@ "config-test.yaml")
-
-)
-
-
-Target.create "CopyConfig" (fun _ ->
-    if not (File.exists(appPath @@ "config.yaml"))
-        then Fake.IO.Shell.copyFile (appPath @@ "config.yaml") ("config_design.yaml") |> ignore
-    Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
-)
 
 Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
@@ -121,11 +84,6 @@ Target.create "Run" (fun _ ->
   |> Async.Parallel
   |> Async.RunSynchronously
   |> ignore
-)
-
-Target.create "Bundle" (fun _ ->
-    runDotNet (sprintf "publish \"%s\%s\" -c release -o \"%s\"" appPath "Template.Saturn.WebHost.fsproj" deployDir) __SOURCE_DIRECTORY__
-    Shell.copyDir (Path.combine deployDir "public") (Path.combine clientPath "public") FileFilter.allFiles
 )
 
 type ArmOutput =
@@ -243,28 +201,16 @@ Target.create "Publish" (fun _ ->
     DotNet.publish (fun p -> { p with OutputPath = Some "../../published"} ) appPath
 )
 
-//Target.create "DeployToAzure" (fun _ ->
-//    Target.runOrDefaultWithArguments "AppService"
-//)
-
 open Fake.Core.TargetOperators
 
 
 "Clean" 
-  //==> "InstallDotNetCore"
-  //==> "InstallClient"
-  ==> "CopyConfig"
-  ==> "UpdateConfiguration"
   ==> "Restore"
   ==> "Build"
 
 "Clean"
-    //==> "InstallClient"
-    ==> "CopyConfig"
-    ==> "UpdateConfiguration"
     ==> "Restore"
     ==> "Build"
-    ==> "Bundle"
     ==> "Test"
     ==> "ArmTemplate"
     ==> "Deploy"
@@ -275,27 +221,15 @@ open Fake.Core.TargetOperators
   ==> "Run"
 
 "Clean"
-  //==> "InstallDotNetCore"
-  //==> "InstallClient"
-  ==> "CopyConfig"
-  ==> "UpdateConfiguration"
   ==> "Restore"
   ==> "Build"
   ==> "Test"
 
 "Clean"
-  //==> "InstallDotNetCore"
-  ==> "CopyConfig"
-  ==> "UpdateConfiguration"
   ==> "Restore"
   ==> "Build"
   ==> "Test"
   ==> "Publish"
-
-"Clean"
-  ==> "CopyConfig"
-  ==> "UpdateConfiguration"
-
 
 Target.runOrDefaultWithArguments "Test"
 

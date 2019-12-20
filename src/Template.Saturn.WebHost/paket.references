@@ -1,6 +1,5 @@
 FSharp.Core
 FSharp.Data
-FSharp.Configuration
 Saturn
 
 FsToolkit.ErrorHandling
@@ -15,5 +14,3 @@ COM.Infrastructure
 Serilog.AspNetCore
 Serilog.Sinks.Console
 Serilog.Sinks.AzureBlobStorage
-
-Chessie

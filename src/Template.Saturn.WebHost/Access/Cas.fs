@@ -5,12 +5,10 @@ open Giraffe
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Authentication.Cookies
-open Microsoft.AspNetCore.Authentication
 open AspNetCore.Security.CAS
-open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Configuration
 
-let private addCookie state (c : AuthenticationBuilder) = if not state.CookiesAlreadyAdded then c.AddCookie() |> ignore
+//let private addCookie state (c : AuthenticationBuilder) = if not state.CookiesAlreadyAdded then c.AddCookie() |> ignore
 
 type ApplicationBuilder with
     [<CustomOperation("use_cas")>]

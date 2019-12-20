@@ -15,7 +15,6 @@ open Microsoft.AspNetCore.Builder
 open System.Security.Claims
 open Microsoft.Extensions.Logging
 open Microsoft.AspNetCore.Authentication.Cookies
-open FSharp.Configuration
 open Serilog
 open Serilog.Sinks
 open Microsoft.Extensions.Configuration

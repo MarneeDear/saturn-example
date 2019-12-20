@@ -27,7 +27,6 @@ let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
 let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fake.IO.Path.getFullName
 //TODO you wlll need to fill this in if using Fable and SAFE Stack
 //let serverPath = Path.getFullName "./src/Server"
-let clientPath = Path.getFullName "./src/Template.Saturn.Client"
 let deployDir = Path.getFullName "./deploy"
 
 let isTeamCity =

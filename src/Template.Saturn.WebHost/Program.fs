@@ -24,6 +24,7 @@ open Microsoft.Extensions.DependencyInjection
 open COM.Core
 open COM.Infrastructure
 open COM.Core.Models
+open Microsoft.AspNetCore.Hosting
 
 let endpointPipe = pipeline {
     plug head
@@ -71,6 +72,9 @@ let configSerilog (builder:ILoggingBuilder) =
     ] |> List.iter findConfig
 
     builder.AddSerilog(loggingConfig.CreateLogger()) |> ignore
+
+let setupCASConfig2 (ctx: System.Action<WebHostBuilderContext,IServiceCollection>) =
+    ctx.
 
 let setupCASConfig (config:IConfiguration) =
     //let config = builder.Services.BuildServiceProvider().GetService<IConfiguration>()

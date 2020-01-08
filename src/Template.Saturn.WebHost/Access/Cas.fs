@@ -7,6 +7,7 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Authentication.Cookies
 open AspNetCore.Security.CAS
 open Microsoft.Extensions.Configuration
+open Microsoft.AspNetCore.Hosting
 
 //let private addCookie state (c : AuthenticationBuilder) = if not state.CookiesAlreadyAdded then c.AddCookie() |> ignore
 
@@ -44,3 +45,10 @@ type ApplicationBuilder with
             AppConfigs = middleware::state.AppConfigs
             CookiesAlreadyAdded = true
         }
+
+    [<CustomOperation("use_cas2")>]
+    member __.UseCasAuthentication2(state: ApplicationState, (casConfig: System.Action<WebHostBuilderContext, IServiceCollection>) ) = //, casCookies : IConfiguration -> System.Action<CookieAuthenticationOptions>, casConfig : IConfiguration -> System.Action<CasOptions>) = //(options :  CasOptions) ) =
+        let middleware (app : IApplicationBuilder) =
+            app.UseAuthentication()
+
+        {state with HostConfigs = (fun (app : IWebHostBuilder)-> app.ConfigureServices(casConfig))::state.HostConfigs}

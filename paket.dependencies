@@ -26,21 +26,14 @@ nuget Logary.Adapters.Facade prerelease
 
 clitool dotnet-saturn
 
+// [ FAKE GROUP ]
 group Build
-  source https://api.nuget.org/v3/index.json
-  framework: netstandard2.0
-
-  nuget FSharp.Core 4.3.4 // https://github.com/fsharp/FAKE/issues/2001
-  nuget Fake.Core.Target
-  nuget Fake.DotNet.Cli
-  nuget Fake.IO.FileSystem
-  nuget Fake.Core.Environment
-  nuget Fake.Core.Trace
-  nuget Fake.IO.Zip
-  github UACOMTucson/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
-
-
-  nuget NuGet.CommandLine
-  nuget xunit.runner.console
-
-  // GITHUB VERSION
+    storage none
+    source https://api.nuget.org/v3/index.json
+    nuget Fake.DotNet.Cli
+    nuget Fake.IO.FileSystem
+    nuget Fake.Core.Target
+    nuget Fake.Core.Environment
+    nuget Fake.Core.Trace
+    nuget Fake.IO.Zip
+    github UACOMTucson/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs

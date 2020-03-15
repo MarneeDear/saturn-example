@@ -4,55 +4,79 @@ open System
 open Giraffe
 open Saturn
 open Config
-open Microsoft.AspNetCore.Http
-open System.Threading.Tasks
-open Microsoft.AspNetCore.Authentication.OAuth
-open System.Net.Http
-open System.Net.Http.Headers
-open Newtonsoft.Json.Linq
-open CAS
 open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Http
 open System.Security.Claims
+open Serilog
+open Serilog.Sinks
+open Serilog.Events
+open Microsoft.WindowsAzure.Storage
+open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.Logging
+open Serilog
+open System.IO
 open Microsoft.AspNetCore.Authentication.Cookies
-open FSharp.Configuration
+open System.Threading.Tasks
+open CAS
 
-type RuntimeConfigSettings = YamlConfig<"config.yaml">
-let config = RuntimeConfigSettings()
-
-let debug thing = 
-    fun next ctx ->
-        Printf.printfn "DEBUG [%s]" thing
-        next ctx
-
-let getConfig =
+let setupConfiguration (config:IConfiguration) =
     {
-      connectionString = "DataSource=database.sqlite"
-      edsUrl = string config.EDS.Url
-      webAuthUrl = string config.WebAuth.Url
-      edsUserName = config.EDS.UserName
-      edsPassword = config.EDS.Password
-      configSettingExample = config.General.Example
+        connectionString = config.["ConnectionStrings:DefaultConnection"]
+        edsUrl = config.[""]
+        webAuthUrl = config.[""]
+        edsUserName = config.[""]
+        edsPassword = config.[""]
+        configSettingExample = config.[""]
+        environment = config.[""]
+        blobStorageConnectionString = config.[""]
+        sink = config.[""]
     }
+
+//https://github.com/chriswill/serilog-sinks-azureblobstorage
+
+let configSerilog (builder:ILoggingBuilder) =
+    builder.SetMinimumLevel(LogLevel.Information) |> ignore
+    let config = builder.Services.BuildServiceProvider().GetService<IConfiguration>()
+    let loggingConfig = new LoggerConfiguration()
+    loggingConfig.Enrich.FromLogContext() |> ignore
+    match config.["Logging:Sink"] with
+    //| "File" -> loggingConfig.WriteTo.File("D:\\log.log", rollingInterval = RollingInterval.Day) |> ignore
+    | "Console" -> loggingConfig.WriteTo.Console() |> ignore
+    | _ -> loggingConfig.WriteTo.Console() |> ignore
+    builder.AddSerilog(loggingConfig.CreateLogger()) |> ignore
+
+let setupCookies (options:CookieAuthenticationOptions) = 
+    let cookieEvents = new CookieAuthenticationEvents()
+    cookieEvents.OnSigningIn <- (fun ctx -> 
+            let identity = new ClaimsIdentity()
+            identity.AddClaim(new Claim(ClaimTypes.Role, "admin"))
+            identity.AddClaim(new Claim(ClaimTypes.Role, "pcoord"))
+            ctx.Principal.AddIdentity(identity)
+            Task.CompletedTask
+            )
+    options.Events <- cookieEvents
 
 let endpointPipe = pipeline {
     plug head
     plug requestId
-    plug (debug config.EDS.UserName)
-    plug (debug config.EDS.Password)
 }
 let app = application {
     pipe_through endpointPipe
-    logging (fun (builder: ILoggingBuilder) -> builder.SetMinimumLevel(LogLevel.Trace) |> ignore)
-    error_handler (fun ex _ -> pipeline { render_html (InternalError.layout ex) })
+    logging configSerilog
+    error_handler (fun ex logger -> 
+                                    logger.LogCritical(ex.Message)
+                                    pipeline { render_html (InternalError.layout ex) }
+                                    )
     use_router Router.appRouter
     url "http://saturn.local:8085/"
     memory_cache
     use_static "static"
     use_gzip
-    use_config (fun _ -> getConfig ) //TODO: Set development time configuration
+    use_config setupConfiguration 
     use_iis
-    use_cas "https://webauth.arizona.edu/webauth"
+    use_cas ""
+    use_cookies_authentication_with_config (fun options -> setupCookies options)
     //force_ssl (Nullable<int>(8085))
 }
 

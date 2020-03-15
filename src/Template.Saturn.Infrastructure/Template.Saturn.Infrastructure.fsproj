@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <!--<DotnetFscCompilerPath></DotnetFscCompilerPath>-->
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
@@ -13,11 +14,11 @@
     <None Include="packages.config" />
     <None Include="paket.references" />
   </ItemGroup>
-  <ItemGroup>
-    <!--<PackageReference Include="" Version=""/>-->
+  <!--<ItemGroup>
+    --><!--<PackageReference Include="" Version=""/>--><!--
     <PackageReference Include="FSharp.Core" Version="4.5.2" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
     <PackageReference Include="FsToolkit.ErrorHandling" Version="0.0.9" />
-  </ItemGroup>
+  </ItemGroup>-->
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

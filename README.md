@@ -32,12 +32,13 @@ Make sure you have .NET Core 3.1 SDK installed
 	1. key: ASPNETCORE_ENVIRONMENT
 	2. value: Development
 4. Copy appsettings.json and rename it to appsettings.Development.json
-5. __DO NOT PUT SETTINGS IN__ appsettings.json. __ONLY PUT SETTINGS IN__ appsettings.Development.json. __NEVER COMMIT appsettings.Development.json__
-6. Install `dotnet paket`
+5. __DO NOT PUT SENSITIVE SECRET SETTINGS IN__ appsettings.json. __ONLY PUT SETTINGS IN__ appsettings.Development.json. __NEVER COMMIT appsettings.Development.json__
+	1. You do not need to change the settings to get the app to run. Only do this when you use the temaple to build a real application.
+6. Install paket
 	1. `dotnet tool install paket`
-	2. `dotnet rool restore`
-7. Install `dotnet fake`
-	1. `dotnet tool install fake`
+	2. `dotnet tool restore`
+7. Install fake
+	1. `dotnet tool install fake-cli`
 	2. `dotnet tool restore`
 8. Run the build and launch the app
 	1. In `cmd` go to the root of the application. 

@@ -24,7 +24,7 @@ open Cit.Helpers.Arm.Parameters
 open Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
 let appPath = "./src/Template.Saturn.WebHost/" |> Fake.IO.Path.getFullName
-let infrastructureTestsPath = "./src/Template.Saturn.Infrastructure.Tests" |> Fake.IO.Path.getFullName
+let testsPath = "./src/Template.Saturn.Tests" |> Fake.IO.Path.getFullName
 //TODO you wlll need to fill this in if using Fable and SAFE Stack
 //let serverPath = Path.getFullName "./src/Server"
 let clientPath = Path.getFullName "./src/Template.Saturn.Client"
@@ -111,6 +111,7 @@ Target.create "UpdateConfiguration" (fun _ ->
 
 Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
+    runDotNet "build" testsPath
 )
 
 Target.create "Run" (fun _ -> 
@@ -240,7 +241,7 @@ Target.create "Deploy" (fun _ ->
 
 
 Target.create "Test" (fun _ -> 
-    DotNet.test (fun p -> p) infrastructureTestsPath
+    DotNet.test (fun p -> p) testsPath
 )
 
 Target.create "Clean" (fun _ ->

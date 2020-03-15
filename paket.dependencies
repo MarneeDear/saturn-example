@@ -9,16 +9,20 @@ nuget Giraffe
 nuget AspNetCore.Security.CAS
 nuget Microsoft.Data.Sqlite
 nuget FsToolkit.ErrorHandling
-nuget FsUnit.xUnit
-nuget xunit.abstractions
-nuget xunit.runner.visualstudio
-//nuget FSharp.Configuration
 
 nuget Serilog.AspNetCore
 nuget Serilog.Sinks.Console
 nuget Serilog.Sinks.AzureBlobStorage
 nuget Serilog.Sinks.File
 nuget WindowsAzure.Storage
+
+nuget Expecto
+nuget Microsoft.NET.Test.Sdk
+nuget Expecto.FsCheck
+nuget Expecto.TestResults
+nuget Expecto.BenchmarkDotNet
+nuget Expecto.Hopac
+nuget Logary.Adapters.Facade prerelease
 
 clitool dotnet-saturn
 

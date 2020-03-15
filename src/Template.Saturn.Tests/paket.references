@@ -1,0 +1,7 @@
+﻿Expecto
+Microsoft.NET.Test.Sdk
+Expecto.FsCheck
+Expecto.TestResults
+Expecto.BenchmarkDotNet
+Expecto.Hopac
+Logary.Adapters.Facade

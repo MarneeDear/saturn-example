@@ -1,10 +1,6 @@
 # Saturn Example
 
-See my blog for more details.
-
-[Saturn with CAS Single Sign-On Sample Application](https://steemit.com/fsharp/@marnee/saturn-with-cas-single-sign-on-sample-application)
-
-The Saturn App Template is best developed with Visual Studio Code or Visual Studio 2017 (Community works).
+The Saturn App Template is best developed with Visual Studio Code or Visual Studio 2019 (Community works).
 
 ## More about Saturn
 
@@ -13,8 +9,6 @@ https://saturnframework.org/docs/
 http://kcieslak.io/Reinventing-MVC-for-web-programming-with-F
 
 This is for pure F# web applications and should be preferred over the original web app template.
-
-You can target netstandard2.0, but in that case you wont be able to use the FSharp.Data SqlCommandProvider and some other F# type providers.
 
 Here is a list of the possible target frameworks.
 https://docs.microsoft.com/en-us/dotnet/standard/frameworks
@@ -25,32 +19,39 @@ https://docs.microsoft.com/en-us/dotnet/standard/frameworks
 * Examples of an access restricted application using two routes
   * Logged In View
   * Default View
-* How to setup a config using FSharp.Configuration and YAML
+* Examples cookies setup where you can plug in EDS requests to get membership and other user details
 
 ## How to get me running
 
+Make sure you have .NET Core 3.1 SDK installed
+
 1. Clone me
-2. Copy config_design.yaml and rename it to config.yaml
-3. Install packages with `.paket/paket.exe install`
-4. Run the build and launch the app
-	1. in bash `sh build-dotnet.sh Run`
-	2. in cmd `build-dotnet.cmd Run`
+2. Add a hostname
+	1. `saturn.local` `127.0.0.1`
+3. Add an environment variable. This will tell ASP.NET Core that you want to use Development settings
+	1. key: ASPNETCORE_ENVIRONMENT
+	2. value: Development
+4. Copy appsettings.json and rename it to appsettings.Development.json
+5. __DO NOT PUT SETTINGS IN__ appsettings.json. __ONLY PUT SETTINGS IN__ appsettings.Development.json. __NEVER COMMIT appsettings.Development.json__
+6. Install `dotnet paket`
+	1. `dotnet tool install paket`
+	2. `dotnet rool restore`
+7. Install `dotnet fake`
+	1. `dotnet tool install fake`
+	2. `dotnet tool restore`
+8. Run the build and launch the app
+	1. In `cmd` go to the root of the application. 
+	2. Do `dotnet fake build target Run`
+	2. The app should launch in a browser
 
-## Optional libraries
-
-Instead of Chessie for error handling I recommend the builtin Result type or FsToolkit.ErrorHandling which provides more utilities
-
-https://demystifyfp.gitbook.io/fstoolkit-errorhandling/
-
-FsToolkit.ErrorHandling has been installed in Infrastructure and WebHost
 
 ## Test Framework
 
 ### Required
 
-* xUnit
+See the paket.dependencies file for all testing libraries
 
-* FsUnit
+* Excpecto
 
 ## Optional Recommendations
 
@@ -70,6 +71,10 @@ By default this template will run as self-hosted using Kestrel, but you can host
 ## You can also host on IIS as a published site
 
 The above steps will get you there but instead of pointing to the WebHost folder, use Visual Studio or `dotnet publish` to create a published site and use that in IIS. You may need to copy over the web.config file manually. I don't know why.
+
+## Deploying to Azure
+
+TODO
 
 ## I might be running on Azure
 

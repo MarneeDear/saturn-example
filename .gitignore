@@ -10,3 +10,4 @@ artifacts/
 *.pubxml.user
 src/Template.Saturn.WebHost/Properties
 *config.yaml
+src/Template.Saturn.WebHost/appsettings.Development.json

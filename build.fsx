@@ -241,7 +241,9 @@ Target.create "Deploy" (fun _ ->
 
 
 Target.create "Test" (fun _ -> 
-    DotNet.test (fun p -> p) testsPath
+    //DotNet.test (fun p -> p) testsPath Use this for xunit
+    runDotNet "run" testsPath |> ignore //Use this for expecto
+
 )
 
 Target.create "Clean" (fun _ ->

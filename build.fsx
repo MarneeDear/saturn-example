@@ -102,35 +102,15 @@ Target.create "UpdateConfiguration" (fun _ ->
     match BuildServer.buildServer with
     | TeamCity ->
                     Trace.traceEnvironmentVariables |> ignore
-                    File.applyReplace (String.replace "ENVIRONMENT" (Environment.environVar "Environment")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "BLOBSTORAGECONNECTIONSTRING" (Environment.environVar "Azure.BlobStorageConnectionString")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "WEBAUTHURL" (Environment.environVar "WebAuth.URL")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "CONNECTIONSTRING" (Environment.environVar "DB.ConnectionString") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSURL" (Environment.environVar "EDS.URL")) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSUSERNAME" (Environment.environVar "EDS.UserName") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "EDSPASSWORD" (Environment.environVar "EDS.Password") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "GENERALCONFIGSETTING" (Environment.environVar "General.ConfigSettingExample") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "RETENTION" (Environment.environVar "Logging.Retention") ) (appPath @@ "config.yaml")
-                    File.applyReplace (String.replace "SINK" (Environment.environVar "Logging.Sink") ) (appPath @@ "config.yaml")
+                    //TODO apply teamcity env variables to config file
     | _ ->
                 Trace.traceEnvironmentVariables |> ignore
-                File.applyReplace (String.replace "WEBAUTHURL" "TEST" ) (appPath @@ "config-test.yaml")
-                File.applyReplace (String.replace "CONNECTIONSTRING" "TEST" ) (appPath @@ "config-test.yaml")
 
 )
 
 
-//Target.create "CopyConfig" (fun _ ->
-//    if not (File.exists(appPath @@ "config.yaml"))
-//        then Fake.IO.Shell.copyFile (appPath @@ "config.yaml") ("config_design.yaml") |> ignore
-//    Fake.IO.Shell.copyFile (appPath @@ "config-test.yaml") ("config_design.yaml") |> ignore
-//)
-
 Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
-    //TODO you will need this for packing up fable
-    //runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
-    //RESTORE PAKET -- why does fake kill my paket file
 )
 
 Target.create "Run" (fun _ -> 
@@ -138,25 +118,11 @@ Target.create "Run" (fun _ ->
     runDotNet "watch run" appPath |> ignore
     }
 
-  //TODO you will need this to pack the client if you use safe stack
-  //let client = async {
-  //      runTool yarnTool (sprintf "webpack-cli --config %s -p" (clientPath @@ "webpack.config.js")) __SOURCE_DIRECTORY__
-  //  }
 
   let browser = async {
     Threading.Thread.Sleep 8000
     openBrowser "http://saturn.local:8085" |> ignore
   }
-  //let vsCodeSession = Environment.hasEnvironVar "vsCodeSession"
-  //let safeClientOnly = Environment.hasEnvironVar "safeClientOnly"
-
-  //let tasks =
-  //  [ if not safeClientOnly then yield server
-  //    yield client
-  //    if not vsCodeSession then yield browser ]
-
-
-  //[ client; server; browser]
   [server; browser;]
   |> Async.Parallel
   |> Async.RunSynchronously

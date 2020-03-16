@@ -43,10 +43,9 @@ let loggedInView = router {
 let getIntExample (id : string) = text (sprintf "YOU GOT ME %s" id)
 
 let isAuthenticated (ctx:HttpContext) =
-    if ctx.User.Identity.IsAuthenticated then 
-        (redirectTo false "/dashboard")
-    else
-        (Giraffe.Auth.challenge "CAS")
+    match ctx.User.Identity.IsAuthenticated with
+    | true  ->  redirectTo false "/dashboard" 
+    | false ->  Giraffe.Auth.challenge "CAS"
 
 let browserRouter = router {
     not_found_handler (htmlView NotFound.layout) //Use the default 404 webpage
@@ -61,7 +60,7 @@ let browserRouter = router {
     get "/logout" (signOut "Cookies" >=> (fun next ctx -> htmlView (Logout.layout ctx) next ctx)) 
     get "/dashboard" loggedInView 
     get "/webauth" (fun next ctx -> (isAuthenticated ctx) next ctx) 
-    get "/blog" (redirectTo false "https://steemit.com/@marnee")
+    //get "/blog" (redirectTo false "https://steemit.com/@marnee")
 
     //THESE BOOKS ROUTES ALL WORK TOGETHER
     //get "/books" loggedInView

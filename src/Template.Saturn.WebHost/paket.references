@@ -1,9 +1,7 @@
-FSharp.Core
 Saturn
 Microsoft.Data.Sqlite
 FsToolkit.ErrorHandling
 AspNetCore.Security.CAS
-//FSharp.Configuration
 WindowsAzure.Storage
 Serilog.AspNetCore
 Serilog.Sinks.Console

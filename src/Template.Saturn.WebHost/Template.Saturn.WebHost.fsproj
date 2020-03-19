@@ -81,6 +81,5 @@
     <ProjectReference Include="..\Template.Saturn.Core\Template.Saturn.Core.fsproj" />
     <ProjectReference Include="..\Template.Saturn.Infrastructure\Template.Saturn.Infrastructure.fsproj" />
   </ItemGroup>
-  <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

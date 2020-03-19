@@ -5,7 +5,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UserSecretsId>1e08373c-b8a3-4788-8770-e059529be4b5</UserSecretsId>
-    <DotnetFscCompilerPath></DotnetFscCompilerPath>
     <UseAppHost>false</UseAppHost>
   </PropertyGroup>
   <ItemGroup>
@@ -87,10 +86,6 @@
     <ProjectReference Include="..\Template.Saturn.Core\Template.Saturn.Core.fsproj" />
     <ProjectReference Include="..\Template.Saturn.Infrastructure\Template.Saturn.Infrastructure.fsproj" />
   </ItemGroup>
-  <!--<ItemGroup>
-    <PackageReference Update="Giraffe" Version="3.4.0" />
-    <PackageReference Update="Saturn" Version="0.8.0" />
-  </ItemGroup>-->
   <Import Project="..\..\fsc.props" />
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

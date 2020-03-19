@@ -78,9 +78,6 @@
     <None Include="static\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="web.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Template.Saturn.Core\Template.Saturn.Core.fsproj" />

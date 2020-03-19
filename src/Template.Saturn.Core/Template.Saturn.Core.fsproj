@@ -10,7 +10,6 @@
     <Compile Include="Models.fs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="paket.references" />
   </ItemGroup>
   <!--<ItemGroup>

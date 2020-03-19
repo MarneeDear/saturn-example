@@ -4,7 +4,6 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>1e08373c-b8a3-4788-8770-e059529be4b5</UserSecretsId>
-    <UseAppHost>false</UseAppHost>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Config.fs" />

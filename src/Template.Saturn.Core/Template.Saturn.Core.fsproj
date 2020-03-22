@@ -1,23 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <!--<DotnetFscCompilerPath></DotnetFscCompilerPath>-->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Models.fs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
     <None Include="paket.references" />
   </ItemGroup>
-  <!--<ItemGroup>
-    --><!--<PackageReference Include="" Version=""/>--><!--
-    <PackageReference Include="FSharp.Core" Version="4.5.2" />
-    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
-  </ItemGroup>-->
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

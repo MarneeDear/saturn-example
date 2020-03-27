@@ -69,13 +69,13 @@ let app = application {
                                     pipeline { render_html (InternalError.layout ex) }
                                     )
     use_router Router.appRouter
-    url "http://saturn.local:8085/"
+    url "https://localhost/"
     memory_cache
     use_static "static"
     use_gzip
     use_config setupConfiguration 
     use_iis
-    use_cas ""
+    use_cas "https://webauth.arizona.edu/webauth"
     use_cookies_authentication_with_config (fun options -> setupCookies options)
     //force_ssl (Nullable<int>(8085))
 }

@@ -52,15 +52,6 @@ let runDotNet cmd workingDir =
         DotNet.exec (DotNet.Options.withWorkingDirectory workingDir) cmd ""
     if result.ExitCode <> 0 then failwithf "'dotnet %s' failed in %s" cmd workingDir
 
-let runTool cmd args workingDir =
-    let arguments = args |> String.split ' ' |> Arguments.OfArgs
-    Trace.trace (sprintf "Command %s | Command arguments %s" cmd args)
-    Command.RawCommand (cmd, arguments)
-    |> CreateProcess.fromCommand
-    |> CreateProcess.withWorkingDirectory workingDir
-    |> CreateProcess.ensureExitCode
-    |> Proc.run
-    |> ignore
 
 let openBrowser url =
     //https://github.com/dotnet/corefx/issues/10361
@@ -70,24 +61,8 @@ let openBrowser url =
     |> Proc.run
     |> ignore
 
-let nodeTool = platformTool "node" "node.exe"
-let yarnTool = platformTool "yarn" "yarn.cmd"
-
-Trace.trace (sprintf "Node Tool %s" nodeTool)
-Trace.trace (sprintf "Yarn tool %s" yarnTool)
-
 Target.create "InstallDotNetCore" (fun _ ->
     DotNet.install (fun p -> {p with Version = DotNet.CliVersion.GlobalJson }) |> ignore
-)
-
-Target.create "InstallClient" (fun _ ->
-    printfn "Node version:"
-    runTool nodeTool "--version" __SOURCE_DIRECTORY__
-    printfn "Yarn version:"
-    runTool yarnTool "--version" __SOURCE_DIRECTORY__
-    runTool yarnTool "install --frozen-lockfile" __SOURCE_DIRECTORY__
-    //TODO you will need this to pack fable
-    runDotNet "restore" clientPath 
 )
 
 Target.create "Restore" (fun _ ->
@@ -108,7 +83,6 @@ Target.create "UpdateConfiguration" (fun _ ->
 
 )
 
-
 Target.create "Build"  (fun _ ->
     runDotNet "build" appPath
     runDotNet "build" testsPath
@@ -122,7 +96,7 @@ Target.create "Run" (fun _ ->
 
   let browser = async {
     Threading.Thread.Sleep 8000
-    openBrowser "http://saturn.local:8085" |> ignore
+    openBrowser "https://localhost" |> ignore
   }
   [server; browser;]
   |> Async.Parallel

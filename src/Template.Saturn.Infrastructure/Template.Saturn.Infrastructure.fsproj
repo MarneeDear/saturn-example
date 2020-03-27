@@ -14,11 +14,5 @@
     <None Include="packages.config" />
     <None Include="paket.references" />
   </ItemGroup>
-  <!--<ItemGroup>
-    --><!--<PackageReference Include="" Version=""/>--><!--
-    <PackageReference Include="FSharp.Core" Version="4.5.2" />
-    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
-    <PackageReference Include="FsToolkit.ErrorHandling" Version="0.0.9" />
-  </ItemGroup>-->
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
